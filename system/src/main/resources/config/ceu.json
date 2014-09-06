@@ -1,0 +1,29 @@
+{
+	sliceSeparator:"_",
+	isAutoWrapItemName:false,
+	servers:
+	[
+		{
+			clusterName:"Evon Cluster 01",
+			keyspace:"oauth",
+			hostName:"localhost",
+			port:9160,
+			default:false,
+			maxConsPerHost:30, 
+			maxTimeoutWhenExhausted:120000,
+			socketTimeout:60000,
+			connectTimeout:10000
+		},
+		{
+			clusterName:"Evon Cluster 01",
+			keyspace:"bb",
+			hostName:"localhost",
+			port:9160,
+			default:true,
+			maxConsPerHost:3,
+			maxTimeoutWhenExhausted:120000,
+			socketTimeout:60000,
+			connectTimeout:10000
+		}
+	]
+}
