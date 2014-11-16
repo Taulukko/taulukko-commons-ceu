@@ -132,7 +132,7 @@ dependencies
 
 
 	//junit
-	compile "junit:junit:+"
+	testCompile "junit:junit:+"
 	
 	
 	/*TAULUKKO COMMON CEU*/ 
