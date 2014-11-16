@@ -9,7 +9,7 @@
  * 
  */
 
-package br.com.evon.cassandra;
+package com.taulukko.cassandra;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

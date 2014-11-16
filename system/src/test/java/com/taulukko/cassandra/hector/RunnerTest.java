@@ -1,4 +1,4 @@
-package br.com.evon.cassandra.hector;
+package com.taulukko.cassandra.hector;
 
 import java.util.List;
 
@@ -7,12 +7,13 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.evon.cassandra.AccountTestBean;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Command;
-import br.com.evon.cassandra.hector.handler.BeanHandler;
-import br.com.evon.cassandra.hector.handler.BeanListHandler;
-
+import com.taulukko.cassandra.AccountTestBean;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Command;
+import com.taulukko.cassandra.hector.FactoryDataSourceHector;
+import com.taulukko.cassandra.hector.RunnerHector;
+import com.taulukko.cassandra.hector.handler.BeanHandler;
+import com.taulukko.cassandra.hector.handler.BeanListHandler;
 import com.taulukko.common.ceu.test.InitializeTests;
 
 public class RunnerTest {

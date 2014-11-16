@@ -1,12 +1,11 @@
-package br.com.evon.cassandra;
+package com.taulukko.cassandra;
  
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.evon.cassandra.ConfigBean;
-import br.com.evon.cassandra.ServerInfo;
-
 import com.evon.jsonParser.JSONParser;
+import com.taulukko.cassandra.ConfigBean;
+import com.taulukko.cassandra.ServerInfo;
 
 public class ConfigTest {
 

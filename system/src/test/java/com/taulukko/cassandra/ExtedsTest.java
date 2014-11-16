@@ -1,3 +1,4 @@
+package com.taulukko.cassandra;
 import java.util.ArrayList;
 import java.util.List;
 

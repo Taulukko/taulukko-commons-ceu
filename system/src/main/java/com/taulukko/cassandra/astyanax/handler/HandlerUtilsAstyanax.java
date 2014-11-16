@@ -1,4 +1,4 @@
-package br.com.evon.cassandra.astyanax.handler;
+package com.taulukko.cassandra.astyanax.handler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,9 +14,6 @@ import org.apache.cassandra.db.marshal.DoubleType;
 import org.apache.cassandra.db.marshal.IntegerType;
 import org.apache.cassandra.db.marshal.UTF8Type;
 
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.handler.HandlerUtils;
-
 import com.netflix.astyanax.model.ColumnList;
 import com.netflix.astyanax.model.Row;
 import com.netflix.astyanax.model.Rows;
@@ -31,6 +28,8 @@ import com.netflix.astyanax.serializers.MapSerializer;
 import com.netflix.astyanax.serializers.SetSerializer;
 import com.netflix.astyanax.serializers.ShortSerializer;
 import com.netflix.astyanax.serializers.StringSerializer;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.handler.HandlerUtils;
 
 public class HandlerUtilsAstyanax extends HandlerUtils {
 

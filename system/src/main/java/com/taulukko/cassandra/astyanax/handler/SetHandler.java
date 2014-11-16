@@ -1,15 +1,14 @@
-package br.com.evon.cassandra.astyanax.handler;
+package com.taulukko.cassandra.astyanax.handler;
 
 import java.util.Set;
-
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Handler;
 
 import com.netflix.astyanax.connectionpool.OperationResult;
 import com.netflix.astyanax.model.ColumnList;
 import com.netflix.astyanax.model.CqlResult;
 import com.netflix.astyanax.model.Row;
 import com.netflix.astyanax.model.Rows;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Handler;
 
 public class SetHandler<T> implements
 		Handler<Set<T>, OperationResult<CqlResult<Integer, String>>> {

@@ -1,9 +1,10 @@
-package br.com.evon.cassandra.hector;
+package com.taulukko.cassandra.hector;
 
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Handler;
-import br.com.evon.cassandra.Result;
-import br.com.evon.cassandra.ServerInfo;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Handler;
+import com.taulukko.cassandra.Result;
+import com.taulukko.cassandra.ServerInfo;
+
 import me.prettyprint.cassandra.model.CqlRows;
 import me.prettyprint.cassandra.service.CassandraHost;
 import me.prettyprint.hector.api.query.QueryResult;

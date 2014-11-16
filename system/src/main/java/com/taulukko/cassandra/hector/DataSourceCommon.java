@@ -1,9 +1,10 @@
-package br.com.evon.cassandra.hector;
+package com.taulukko.cassandra.hector;
+
+import com.taulukko.cassandra.DataSource;
 
 import me.prettyprint.hector.api.Cluster;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.factory.HFactory;
-import br.com.evon.cassandra.DataSource;
 
 public class DataSourceCommon implements DataSource<Keyspace> {
 

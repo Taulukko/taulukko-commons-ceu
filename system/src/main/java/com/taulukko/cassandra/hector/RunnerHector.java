@@ -1,4 +1,11 @@
-package br.com.evon.cassandra.hector;
+package com.taulukko.cassandra.hector;
+
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Command;
+import com.taulukko.cassandra.DataSource;
+import com.taulukko.cassandra.Handler;
+import com.taulukko.cassandra.Result;
+import com.taulukko.cassandra.Runner;
 
 import me.prettyprint.cassandra.model.CqlQuery;
 import me.prettyprint.cassandra.model.CqlRows;
@@ -7,12 +14,6 @@ import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.Serializer;
 import me.prettyprint.hector.api.query.QueryResult;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Command;
-import br.com.evon.cassandra.DataSource;
-import br.com.evon.cassandra.Handler;
-import br.com.evon.cassandra.Result;
-import br.com.evon.cassandra.Runner;
 
 public class RunnerHector extends
 		Runner<QueryResult<CqlRows<String, String, byte[]>>> {

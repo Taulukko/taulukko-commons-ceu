@@ -1,4 +1,4 @@
-package br.com.evon.cassandra;
+package com.taulukko.cassandra;
 
 import java.util.List;
 

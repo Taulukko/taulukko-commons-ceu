@@ -1,15 +1,16 @@
-package br.com.evon.cassandra.hector.handler;
+package com.taulukko.cassandra.hector.handler;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Handler;
+
 import me.prettyprint.cassandra.model.CqlRows;
 import me.prettyprint.hector.api.beans.HColumn;
 import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.query.QueryResult;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Handler;
 
 public class BeanListHandler<T> implements
 		Handler<List<T>, QueryResult<CqlRows<String, String, byte[]>>> {

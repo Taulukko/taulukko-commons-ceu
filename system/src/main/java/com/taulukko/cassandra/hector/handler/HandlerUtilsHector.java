@@ -1,9 +1,12 @@
-package br.com.evon.cassandra.hector.handler;
+package com.taulukko.cassandra.hector.handler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
+
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.handler.HandlerUtils;
 
 import me.prettyprint.cassandra.model.CqlRows;
 import me.prettyprint.cassandra.serializers.BooleanSerializer;
@@ -16,8 +19,6 @@ import me.prettyprint.cassandra.serializers.ShortSerializer;
 import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.hector.api.beans.HColumn;
 import me.prettyprint.hector.api.beans.Row;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.handler.HandlerUtils;
 
 public class HandlerUtilsHector extends HandlerUtils{
 

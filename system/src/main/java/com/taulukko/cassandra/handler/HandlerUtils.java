@@ -1,11 +1,11 @@
-package br.com.evon.cassandra.handler;
+package com.taulukko.cassandra.handler;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import br.com.evon.cassandra.CEUException;
+import com.taulukko.cassandra.CEUException;
 
 public abstract class HandlerUtils {
 

@@ -1,7 +1,7 @@
 package com.taulukko.common.ceu.test;
 
-import br.com.evon.cassandra.CEUConfig;
-import br.com.evon.cassandra.CEUException;
+import com.taulukko.cassandra.CEUConfig;
+import com.taulukko.cassandra.CEUException;
 
 public class InitializeTests {
 

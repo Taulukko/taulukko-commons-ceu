@@ -1,4 +1,4 @@
-package br.com.evon.cassandra;
+package com.taulukko.cassandra;
 
 public class ServerInfo {
 

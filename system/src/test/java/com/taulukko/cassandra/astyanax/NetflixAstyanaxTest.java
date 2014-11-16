@@ -1,4 +1,4 @@
-package br.com.evon.cassandra.astyanax;
+package com.taulukko.cassandra.astyanax;
 
 import java.math.BigInteger;
 import java.util.Map;

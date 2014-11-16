@@ -1,4 +1,4 @@
-package br.com.evon.cassandra;
+package com.taulukko.cassandra;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,12 +10,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.taulukko.cassandra.CEUConfig;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Command;
+import com.taulukko.cassandra.Handler;
+import com.taulukko.cassandra.Runner;
 import com.taulukko.common.ceu.test.InitializeTests;
-
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Command;
-import br.com.evon.cassandra.Handler;
-import br.com.evon.cassandra.Runner;
 
 public class FillParametersTest {
 

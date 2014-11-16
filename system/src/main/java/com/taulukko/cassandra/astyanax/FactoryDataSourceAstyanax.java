@@ -1,14 +1,13 @@
-package br.com.evon.cassandra.astyanax;
+package com.taulukko.cassandra.astyanax;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.evon.cassandra.CEUConfig;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.DataSource;
-import br.com.evon.cassandra.ServerInfo;
-
 import com.netflix.astyanax.Keyspace;
+import com.taulukko.cassandra.CEUConfig;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.DataSource;
+import com.taulukko.cassandra.ServerInfo;
 
 public class FactoryDataSourceAstyanax {
 

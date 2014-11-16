@@ -1,4 +1,4 @@
-package br.com.evon.cassandra.astyanax;
+package com.taulukko.cassandra.astyanax;
 
 import java.math.BigInteger;
 import java.text.ParseException;
@@ -9,11 +9,12 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import br.com.evon.cassandra.AccountTestBean;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Command;
-import br.com.evon.cassandra.astyanax.handler.BeanHandler;
-
+import com.taulukko.cassandra.AccountTestBean;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Command;
+import com.taulukko.cassandra.astyanax.FactoryDataSourceAstyanax;
+import com.taulukko.cassandra.astyanax.RunnerAstyanax;
+import com.taulukko.cassandra.astyanax.handler.BeanHandler;
 import com.taulukko.common.ceu.test.InitializeTests;
 
 public class IgnoreCaseSensitive {

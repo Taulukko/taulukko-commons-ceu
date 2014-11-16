@@ -1,4 +1,4 @@
-package br.com.evon.cassandra;
+package com.taulukko.cassandra;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

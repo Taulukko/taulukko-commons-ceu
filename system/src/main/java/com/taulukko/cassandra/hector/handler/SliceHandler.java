@@ -1,16 +1,17 @@
-package br.com.evon.cassandra.hector.handler;
+package com.taulukko.cassandra.hector.handler;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.taulukko.cassandra.CEUConfig;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Handler;
+
 import me.prettyprint.cassandra.model.CqlRows;
 import me.prettyprint.hector.api.beans.HColumn;
 import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.query.QueryResult;
-import br.com.evon.cassandra.CEUConfig;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Handler;
 
 public class SliceHandler<T> implements
 		Handler<Map<String, T>, QueryResult<CqlRows<String, String, byte[]>>> {

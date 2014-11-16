@@ -1,12 +1,11 @@
-package br.com.evon.cassandra.astyanax;
-
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Result;
-import br.com.evon.cassandra.ServerInfo;
+package com.taulukko.cassandra.astyanax;
 
 import com.netflix.astyanax.connectionpool.Host;
 import com.netflix.astyanax.connectionpool.OperationResult;
 import com.netflix.astyanax.model.CqlResult;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Result;
+import com.taulukko.cassandra.ServerInfo;
 
 public class ResultAstyanax implements Result {
 

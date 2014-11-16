@@ -1,11 +1,4 @@
-package br.com.evon.cassandra.astyanax;
-
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Command;
-import br.com.evon.cassandra.DataSource;
-import br.com.evon.cassandra.Handler;
-import br.com.evon.cassandra.Result;
-import br.com.evon.cassandra.Runner;
+package com.taulukko.cassandra.astyanax;
 
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.connectionpool.OperationResult;
@@ -13,6 +6,12 @@ import com.netflix.astyanax.model.ColumnFamily;
 import com.netflix.astyanax.model.CqlResult;
 import com.netflix.astyanax.serializers.IntegerSerializer;
 import com.netflix.astyanax.serializers.StringSerializer;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Command;
+import com.taulukko.cassandra.DataSource;
+import com.taulukko.cassandra.Handler;
+import com.taulukko.cassandra.Result;
+import com.taulukko.cassandra.Runner;
 
 public class RunnerAstyanax extends
 		Runner<OperationResult<CqlResult<Integer, String>>> {

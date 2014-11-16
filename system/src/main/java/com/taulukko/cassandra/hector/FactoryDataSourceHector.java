@@ -1,13 +1,14 @@
-package br.com.evon.cassandra.hector;
+package com.taulukko.cassandra.hector;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.taulukko.cassandra.CEUConfig;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.DataSource;
+import com.taulukko.cassandra.ServerInfo;
+
 import me.prettyprint.hector.api.Keyspace;
-import br.com.evon.cassandra.CEUConfig;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.DataSource;
-import br.com.evon.cassandra.ServerInfo;
 
 public class FactoryDataSourceHector {
 

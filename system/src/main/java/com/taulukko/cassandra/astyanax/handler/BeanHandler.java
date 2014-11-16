@@ -1,17 +1,16 @@
-package br.com.evon.cassandra.astyanax.handler;
+package com.taulukko.cassandra.astyanax.handler;
 
 import java.lang.reflect.Method;
-
-import br.com.evon.cassandra.CEUConfig;
-import br.com.evon.cassandra.CEUException;
-import br.com.evon.cassandra.Handler;
-import br.com.evon.cassandra.handler.HandlerUtils;
 
 import com.netflix.astyanax.connectionpool.OperationResult;
 import com.netflix.astyanax.model.ColumnList;
 import com.netflix.astyanax.model.CqlResult;
 import com.netflix.astyanax.model.Row;
 import com.netflix.astyanax.model.Rows;
+import com.taulukko.cassandra.CEUConfig;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.Handler;
+import com.taulukko.cassandra.handler.HandlerUtils;
 
 public class BeanHandler<T> implements
 		Handler<T, OperationResult<CqlResult<Integer, String>>> {
