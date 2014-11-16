@@ -13,7 +13,7 @@ sourceCompatibility=1.7
  
  
 //PROPERTIES
-version = '1.0'
+version = '1.1'
 //version = '1.0-SNAPSHOT'
 group = 'taulukko-commons'
 jar.baseName =  group + '-ceu' 
