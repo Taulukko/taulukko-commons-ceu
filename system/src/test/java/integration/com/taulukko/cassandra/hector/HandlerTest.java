@@ -1,6 +1,7 @@
-package com.taulukko.cassandra.hector;
+package integration.com.taulukko.cassandra.hector;
 
-import integration.com.taulukko.cassandra.InitializeTests;
+import integration.com.taulukko.cassandra.BaseTest;
+import integration.com.taulukko.cassandra.TestUtil;
 
 import java.text.ParseException;
 import java.util.List;
@@ -22,40 +23,45 @@ import com.taulukko.cassandra.hector.handler.BeanListHandler;
 import com.taulukko.cassandra.hector.handler.SingleObjectHandler;
 import com.taulukko.cassandra.hector.handler.SliceHandler;
 
-public class HandlerTest {
+public class HandlerTest extends BaseTest {
 
 	private static RunnerHector runner = null;
+
+	private static final String TABLE_NAME_HECTOR_TEST = "hector";
 
 	@BeforeClass
 	public static void beforeClass() throws CEUException {
 
-		InitializeTests.runOnce();
-		 
-		
-		runner = new RunnerHector(FactoryDataSourceHector.getDataSource("oauth"));
+		TestUtil.start();
+
+		runner = new RunnerHector(
+				FactoryDataSourceHector.getDataSource(KEYSPACE_NAME_TEST));
 		Command command = null;
 		try {
 
-			command = new Command("DROP TABLE test");
+			command = new Command("DROP TABLE " + TABLE_NAME_HECTOR_TEST);
 			runner.exec(command);
 		} catch (Exception e) {
 			// fine, table test maybe not exist
 		}
 		command = new Command(
-				"CREATE TABLE test (key varchar PRIMARY KEY,email varchar,age int,tag_1 varchar,tag_2 varchar,tag_3 varchar,tag_4 varchar,tag_5 varchar,tag_22 varchar) WITH comparator=UTF8Type AND default_validation = UTF8Type");
+				"CREATE TABLE "
+						+ TABLE_NAME_HECTOR_TEST
+						+ " (key varchar PRIMARY KEY,email varchar,age int,tag_1 varchar,tag_2 varchar,tag_3 varchar,tag_4 varchar,tag_5 varchar,tag_22 varchar) WITH comparator=UTF8Type AND default_validation = UTF8Type");
 		runner.exec(command);
 
 		command = new Command(
-				"INSERT INTO test (key,email,age,tag_1,tag_2,tag_3,tag_4,tag_5,tag_22) VALUES (?,?,?,?,?,?,?,?,?)",
+				"INSERT INTO "
+						+ TABLE_NAME_HECTOR_TEST
+						+ " (key,email,age,tag_1,tag_2,tag_3,tag_4,tag_5,tag_22) VALUES (?,?,?,?,?,?,?,?,?)",
 				"userTest", "userTest@gmail.com", 45, "Pelé1", "Pelé2",
 				"Pelé3", "Pelé4", "Pelé5", "Pelé22");
 		runner.exec(command);
 
 		for (int index = 0; index < 100; index++) {
-			command = new Command(
-					"INSERT INTO test (key,email,age,tag_1) VALUES (?,?,?,?)",
-					"userTest" + index, "userTest" + index + "@gmail.com", 45,
-					"Pelé1");
+			command = new Command("INSERT INTO " + TABLE_NAME_HECTOR_TEST
+					+ " (key,email,age,tag_1) VALUES (?,?,?,?)", "userTest"
+					+ index, "userTest" + index + "@gmail.com", 45, "Pelé1");
 			runner.exec(command);
 		}
 	}
@@ -63,7 +69,7 @@ public class HandlerTest {
 	@AfterClass
 	public static void afterClass() throws CEUException {
 
-		Command command = new Command("DROP TABLE test");
+		Command command = new Command("DROP TABLE " + TABLE_NAME_HECTOR_TEST);
 		runner.exec(command);
 
 	}
@@ -74,7 +80,8 @@ public class HandlerTest {
 		BeanListHandler<AccountTestBean> handler = new BeanListHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT * FROM test limit 10");
+		Command command = new Command("SELECT * FROM " + TABLE_NAME_HECTOR_TEST
+				+ " limit 10");
 
 		List<AccountTestBean> accounts = runner.query(command, handler);
 
@@ -90,8 +97,8 @@ public class HandlerTest {
 		BeanHandler<AccountTestBean> handler = new BeanHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT * FROM test WHERE key = ?",
-				"userTest");
+		Command command = new Command("SELECT * FROM " + TABLE_NAME_HECTOR_TEST
+				+ " WHERE key = ?", "userTest");
 
 		AccountTestBean account = runner.query(command, handler);
 
@@ -105,7 +112,8 @@ public class HandlerTest {
 		BeanHandler<AccountTestBean> handler = new BeanHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT * FROM test WHERE key = ?", "");
+		Command command = new Command("SELECT * FROM " + TABLE_NAME_HECTOR_TEST
+				+ " WHERE key = ?", "");
 
 		AccountTestBean account = runner.query(command, handler);
 
@@ -120,8 +128,8 @@ public class HandlerTest {
 		BeanHandler<AccountTestBean> handler = new BeanHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT email FROM test WHERE key = ?",
-				"**notexist**");
+		Command command = new Command("SELECT email FROM "
+				+ TABLE_NAME_HECTOR_TEST + " WHERE key = ?", "**notexist**");
 
 		AccountTestBean account = runner.query(command, handler);
 
@@ -135,8 +143,8 @@ public class HandlerTest {
 		BeanListHandler<AccountTestBean> handler = new BeanListHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT email FROM test WHERE key = ?",
-				"**notexist**");
+		Command command = new Command("SELECT email FROM "
+				+ TABLE_NAME_HECTOR_TEST + " WHERE key = ?", "**notexist**");
 
 		List<AccountTestBean> accounts = runner.query(command, handler);
 
@@ -150,8 +158,8 @@ public class HandlerTest {
 		SingleObjectHandler<String> handler = new SingleObjectHandler<>(
 				String.class, "email");
 
-		Command command = new Command("SELECT email FROM test WHERE key = ?",
-				"**notexist**");
+		Command command = new Command("SELECT email FROM "
+				+ TABLE_NAME_HECTOR_TEST + " WHERE key = ?", "**notexist**");
 
 		String email = runner.query(command, handler);
 
@@ -164,22 +172,27 @@ public class HandlerTest {
 
 		SingleObjectHandler<String> handler = new SingleObjectHandler<>(
 				String.class, "email");
-		Command command = new Command("SELECT email FROM test WHERE key = ?",
-				"userTest");
+		Command command = new Command("SELECT email FROM "
+				+ TABLE_NAME_HECTOR_TEST + " WHERE key = ?", "userTest");
 
 		String email = runner.query(command, handler);
 
 		Assert.assertEquals("userTest@gmail.com", email);
 	}
 
-	@Test @Ignore /*Em versoes antigas funcionava, por algum motivo quando trocou o jar do cassandra parou mas não sera mais uado*/
+	@Test
+	@Ignore
+	/*
+	 * Em versoes antigas funcionava, por algum motivo quando trocou o jar do
+	 * cassandra parou mas não sera mais uado
+	 */
 	public void beanSliceHandlerPreSliceTest() throws CEUException,
 			ParseException {
 
 		SliceHandler<String> handler = new SliceHandler<>("tag", String.class);
 
-		Command command = new Command(
-				"SELECT 'tag_2'..'tag_3' FROM test WHERE key = ?", "userTest");
+		Command command = new Command("SELECT 'tag_2'..'tag_3' FROM "
+				+ TABLE_NAME_HECTOR_TEST + " WHERE key = ?", "userTest");
 
 		Map<String, String> tags = runner.query(command, handler);
 
@@ -196,8 +209,8 @@ public class HandlerTest {
 
 		SliceHandler<String> handler = new SliceHandler<>("tag", String.class);
 
-		Command command = new Command("SELECT * FROM test WHERE key = ?",
-				"userTest");
+		Command command = new Command("SELECT * FROM " + TABLE_NAME_HECTOR_TEST
+				+ " WHERE key = ?", "userTest");
 
 		Map<String, String> tags = runner.query(command, handler);
 
@@ -214,8 +227,8 @@ public class HandlerTest {
 		BeanHandler<AccountTestBean> handler = new BeanHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT * FROM test WHERE key = ?",
-				"userTest");
+		Command command = new Command("SELECT * FROM " + TABLE_NAME_HECTOR_TEST
+				+ " WHERE key = ?", "userTest");
 
 		AccountTestBean account = runner.query(command, handler);
 

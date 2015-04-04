@@ -17,7 +17,7 @@
 	<groupId>com.taulukko.commons</groupId>
 	<artifactId>taulukko-commons-ceu</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.2.2-SNAPSHOT</version>
 
 
 	<properties>
@@ -126,7 +126,7 @@
 							<goal>test</goal>
 						</goals>
 						<configuration>
-							<skip>true</skip>
+							<skip>false</skip>
 							<includes>
 								<include>**/*Test.java</include>
 							</includes>

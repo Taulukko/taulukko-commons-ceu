@@ -1,6 +1,4 @@
-package com.taulukko.cassandra;
-
-import integration.com.taulukko.cassandra.InitializeTests;
+package integration.com.taulukko.cassandra;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +22,7 @@ public class FillParametersTest {
 
 	@BeforeClass
 	public static void init() throws CEUException {
-		InitializeTests.runOnce();
+		TestUtil.start();
 		 
 		runner = new Runner<Object>() {
 			@Override

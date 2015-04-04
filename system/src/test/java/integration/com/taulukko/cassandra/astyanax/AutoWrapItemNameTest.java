@@ -1,6 +1,6 @@
-package com.taulukko.cassandra.astyanax;
+package integration.com.taulukko.cassandra.astyanax;
 
-import integration.com.taulukko.cassandra.InitializeTests;
+import integration.com.taulukko.cassandra.TestUtil;
 
 import java.text.ParseException;
 
@@ -21,20 +21,24 @@ public class AutoWrapItemNameTest {
 
 	private static RunnerAstyanax runner = null;
 	private static boolean originalAutoWrapItemName = false;
+	private static final String KEYSPACE_NAME_TEST = "keySpaceTest";
 
 	@BeforeClass
 	public static void beforeClass() throws CEUException {
 
-		InitializeTests.runOnce();
-		 
+		TestUtil.start();
+
 		runner = new RunnerAstyanax(
-				FactoryDataSourceAstyanax.getDataSource("oauth"));
+				FactoryDataSourceAstyanax.getDataSource(KEYSPACE_NAME_TEST));
 		originalAutoWrapItemName = CEUConfig.isAutoWrapItemName;
 	}
 
 	@AfterClass
 	public static void afterClass() throws CEUException {
 		CEUConfig.isAutoWrapItemName = originalAutoWrapItemName;
+
+		TestUtil.stop();
+
 	}
 
 	@Test

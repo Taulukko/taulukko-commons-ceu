@@ -1,6 +1,7 @@
-package com.taulukko.cassandra.astyanax;
+package integration.com.taulukko.cassandra.astyanax;
 
-import integration.com.taulukko.cassandra.InitializeTests;
+import integration.com.taulukko.cassandra.BaseTest;
+import integration.com.taulukko.cassandra.TestUtil;
 
 import java.math.BigInteger;
 import java.util.Map;
@@ -15,16 +16,12 @@ import org.junit.Test;
 
 import com.netflix.astyanax.AstyanaxContext;
 import com.netflix.astyanax.Keyspace;
-import com.netflix.astyanax.connectionpool.NodeDiscoveryType;
 import com.netflix.astyanax.connectionpool.OperationResult;
 import com.netflix.astyanax.connectionpool.exceptions.ConnectionException;
-import com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl;
-import com.netflix.astyanax.connectionpool.impl.CountingConnectionPoolMonitor;
 import com.netflix.astyanax.ddl.ColumnDefinition;
 import com.netflix.astyanax.ddl.ColumnFamilyDefinition;
 import com.netflix.astyanax.ddl.FieldMetadata;
 import com.netflix.astyanax.ddl.KeyspaceDefinition;
-import com.netflix.astyanax.impl.AstyanaxConfigurationImpl;
 import com.netflix.astyanax.model.ColumnFamily;
 import com.netflix.astyanax.model.ColumnList;
 import com.netflix.astyanax.model.CqlResult;
@@ -33,9 +30,10 @@ import com.netflix.astyanax.model.Rows;
 import com.netflix.astyanax.serializers.IntegerSerializer;
 import com.netflix.astyanax.serializers.MapSerializer;
 import com.netflix.astyanax.serializers.StringSerializer;
-import com.netflix.astyanax.thrift.ThriftFamilyFactory;
+import com.taulukko.cassandra.CEUException;
+import com.taulukko.cassandra.astyanax.CEUUtils;
 
-public class NetflixAstyanaxTest {
+public class NetflixAstyanaxTest extends BaseTest {
 
 	private static String TABLE_TEST_NAME = "employees";
 	public static AstyanaxContext<Keyspace> context = null;
@@ -43,23 +41,11 @@ public class NetflixAstyanaxTest {
 
 	@BeforeClass
 	public static void init() throws Exception {
-		InitializeTests.runOnce();
-		 
-		context = new AstyanaxContext.Builder()
-				.forCluster("Evon Cluster 01")
-				.forKeyspace("oauth")
-				.withAstyanaxConfiguration(
-						new AstyanaxConfigurationImpl()
-								.setCqlVersion("3.0.0")
-								.setTargetCassandraVersion("1.2")
-								.setDiscoveryType(
-										NodeDiscoveryType.RING_DESCRIBE))
-				.withConnectionPoolConfiguration(
-						new ConnectionPoolConfigurationImpl("MyConnectionPool")
-								.setPort(9160).setMaxConnsPerHost(1)
-								.setSeeds("localhost"))
-				.withConnectionPoolMonitor(new CountingConnectionPoolMonitor())
-				.buildKeyspace(ThriftFamilyFactory.getInstance());
+		TestUtil.start();
+
+		context = CEUUtils.createAstyanaxContext(HOST_NAME_TEST, PORT_TEST,
+				CLUSTER_NAME_TEST, KEYSPACE_NAME_TEST, 30, 360000, 360000,
+				360000);
 
 		context.start();
 		keyspace = context.getClient();
@@ -72,7 +58,7 @@ public class NetflixAstyanaxTest {
 					.withCql("DROP TABLE " + TABLE_TEST_NAME + ";").execute();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+		//fine
 
 		}
 		try {
@@ -80,7 +66,7 @@ public class NetflixAstyanaxTest {
 					.withCql("DROP TABLE " + TABLE_TEST_NAME + "MAP;")
 					.execute();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//fine
 		}
 
 		keyspace.prepareQuery(CQL3_CF)
@@ -106,6 +92,11 @@ public class NetflixAstyanaxTest {
 	public static void shutdown() {
 		if (context != null) {
 			context.shutdown();
+		}
+		try {
+			TestUtil.stop();
+		} catch (CEUException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -230,13 +221,13 @@ public class NetflixAstyanaxTest {
 		MapSerializer<BigInteger, String> serializer = new MapSerializer<>(
 				IntegerType.instance, UTF8Type.instance);
 		// byte bytes[] = columns.getByteArrayValue("mark", new byte[] {});
-		// 000X positivo
-		// -1-1-1X negativo
+		// 000X is > 0
+		// -1-1-1X is < 0
 
-		// 0,3 (3 elementos)
-		// 04 (inicio de chave)
-		// 0000 (chave)
-		// 02 (início de texto)
+		// 0,3 (3 elements)
+		// 04 (start key)
+		// 0000 (key)
+		// 02 (start text)
 
 		// [0, 3, 0, 4, 0, 0, 0, 1, 0, 2, -61, -87, 0, 4, 0, 0, 0, 2, 0, 2,
 		// -61, -70, 0, 4, 0, 0, 0, 3, 0, 2, -61, -77]
@@ -253,9 +244,9 @@ public class NetflixAstyanaxTest {
 	@Test
 	public void metadata() throws ConnectionException {
 
-		Assert.assertEquals("Evon Cluster 01", context.getClusterName());
+		Assert.assertEquals(CLUSTER_NAME_TEST, context.getClusterName());
 
-		Assert.assertEquals("oauth", context.getKeyspaceName());
+		Assert.assertEquals(KEYSPACE_NAME_TEST, context.getKeyspaceName());
 		KeyspaceDefinition kd = keyspace.describeKeyspace();
 
 		for (ColumnFamilyDefinition cf : kd.getColumnFamilyList()) {

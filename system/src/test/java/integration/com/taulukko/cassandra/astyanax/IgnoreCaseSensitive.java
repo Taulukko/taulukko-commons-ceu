@@ -1,6 +1,6 @@
-package com.taulukko.cassandra.astyanax;
+package integration.com.taulukko.cassandra.astyanax;
 
-import integration.com.taulukko.cassandra.InitializeTests;
+import integration.com.taulukko.cassandra.TestUtil;
 
 import java.math.BigInteger;
 import java.text.ParseException;
@@ -24,7 +24,7 @@ public class IgnoreCaseSensitive {
 
 	@BeforeClass
 	public static void beforeClass() throws CEUException {
-		InitializeTests.runOnce();
+		TestUtil.start();
 		 
 		runner = new RunnerAstyanax(
 				FactoryDataSourceAstyanax.getDataSource("oauth"));

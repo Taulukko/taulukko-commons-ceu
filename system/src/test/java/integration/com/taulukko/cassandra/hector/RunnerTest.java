@@ -1,6 +1,7 @@
-package com.taulukko.cassandra.hector;
+package integration.com.taulukko.cassandra.hector;
 
-import integration.com.taulukko.cassandra.InitializeTests;
+import integration.com.taulukko.cassandra.BaseTest;
+import integration.com.taulukko.cassandra.TestUtil;
 
 import java.util.List;
 
@@ -17,39 +18,46 @@ import com.taulukko.cassandra.hector.RunnerHector;
 import com.taulukko.cassandra.hector.handler.BeanHandler;
 import com.taulukko.cassandra.hector.handler.BeanListHandler;
 
-public class RunnerTest {
+public class RunnerTest extends BaseTest {
 
 	private static RunnerHector runner = null;
 
+	private static final String TABLE_NAME_RUNNER_HECTOR_TEST = "runnerhector";
+
 	@BeforeClass
 	public static void beforeClass() throws CEUException {
-		InitializeTests.runOnce();
-		 
-		runner = new RunnerHector(FactoryDataSourceHector.getDataSource("oauth"));
+		TestUtil.start();
+
+		runner = new RunnerHector(
+				FactoryDataSourceHector.getDataSource(KEYSPACE_NAME_TEST));
 
 		Command command = null;
 		try {
 
-			command = new Command("DROP TABLE test");
+			command = new Command("DROP TABLE " + TABLE_NAME_RUNNER_HECTOR_TEST);
 			runner.exec(command);
 		} catch (Exception e) {
 			// fine, table test maybe not exist
 		}
 		command = new Command(
-				"CREATE TABLE test (key varchar PRIMARY KEY,email varchar,age int,tag_1 varchar,tag_2 varchar,tag_3 varchar,tag_4 varchar,tag_5 varchar,tag_22 varchar) WITH comparator=UTF8Type AND default_validation = UTF8Type");
+				"CREATE TABLE "
+						+ TABLE_NAME_RUNNER_HECTOR_TEST
+						+ " (key varchar PRIMARY KEY,email varchar,age int,tag_1 varchar,tag_2 varchar,tag_3 varchar,tag_4 varchar,tag_5 varchar,tag_22 varchar) WITH comparator=UTF8Type AND default_validation = UTF8Type");
 		runner.exec(command);
 
 		command = new Command(
-				"INSERT INTO test (key,email,age,tag_1,tag_2,tag_3,tag_4,tag_5,tag_22) VALUES (?,?,?,?,?,?,?,?,?)",
+				"INSERT INTO "
+						+ TABLE_NAME_RUNNER_HECTOR_TEST
+						+ " (key,email,age,tag_1,tag_2,tag_3,tag_4,tag_5,tag_22) VALUES (?,?,?,?,?,?,?,?,?)",
 				"userTest", "userTest@gmail.com", 45, "Pelé1", "Pelé2",
 				"Pelé3", "Pelé4", "Pelé5", "Pelé22");
 		runner.exec(command);
 
 		for (int index = 0; index < 100; index++) {
-			command = new Command(
-					"INSERT INTO test (key,email,age,tag_1) VALUES (?,?,?,?)",
-					"userTest" + index, "userTest" + index + "@gmail.com", 45,
-					"Pelé1");
+			command = new Command("INSERT INTO "
+					+ TABLE_NAME_RUNNER_HECTOR_TEST
+					+ " (key,email,age,tag_1) VALUES (?,?,?,?)", "userTest"
+					+ index, "userTest" + index + "@gmail.com", 45, "Pelé1");
 			runner.exec(command);
 		}
 	}
@@ -57,22 +65,25 @@ public class RunnerTest {
 	@AfterClass
 	public static void afterClass() throws CEUException {
 
-		Command command = new Command("DROP TABLE test");
+		Command command = new Command("DROP TABLE "
+				+ TABLE_NAME_RUNNER_HECTOR_TEST);
 		runner.exec(command);
 
 	}
 
 	@Test
 	public void execInsert() throws CEUException {
-		Command command = new Command(
-				"INSERT INTO test (key,email,age,tag_1) VALUES (?,?,?,?)",
-				"userTest11", "userTest11@gmail.com", 45, "Pelé1");
+		Command command = new Command("INSERT INTO "
+				+ TABLE_NAME_RUNNER_HECTOR_TEST
+				+ " (key,email,age,tag_1) VALUES (?,?,?,?)", "userTest11",
+				"userTest11@gmail.com", 45, "Pelé1");
 		runner.exec(command);
 
 		BeanHandler<AccountTestBean> handler = new BeanHandler<>(
 				AccountTestBean.class);
 
-		command = new Command("SELECT * FROM test WHERE key = ?", "userTest11");
+		command = new Command("SELECT * FROM " + TABLE_NAME_RUNNER_HECTOR_TEST
+				+ " WHERE key = ?", "userTest11");
 
 		AccountTestBean account = runner.query(command, handler);
 
@@ -82,15 +93,16 @@ public class RunnerTest {
 
 	@Test
 	public void execUpdate() throws CEUException {
-		Command command = new Command(
-				"UPDATE test set email =  ? WHERE key = ?",
-				"userTest3_new@gmail.com", "userTest3");
+		Command command = new Command("UPDATE " + TABLE_NAME_RUNNER_HECTOR_TEST
+				+ " set email =  ? WHERE key = ?", "userTest3_new@gmail.com",
+				"userTest3");
 		runner.exec(command);
 
 		BeanHandler<AccountTestBean> handler = new BeanHandler<>(
 				AccountTestBean.class);
 
-		command = new Command("SELECT * FROM test WHERE key = ?", "userTest3");
+		command = new Command("SELECT * FROM " + TABLE_NAME_RUNNER_HECTOR_TEST
+				+ " WHERE key = ?", "userTest3");
 
 		AccountTestBean account = runner.query(command, handler);
 
@@ -103,7 +115,8 @@ public class RunnerTest {
 		BeanListHandler<AccountTestBean> handler = new BeanListHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT * FROM test limit 3");
+		Command command = new Command("SELECT * FROM "
+				+ TABLE_NAME_RUNNER_HECTOR_TEST + " limit 3");
 
 		List<AccountTestBean> accounts = runner.query(command, handler);
 
@@ -117,7 +130,8 @@ public class RunnerTest {
 		BeanListHandler<AccountTestBean> handler = new BeanListHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT * FROM test limit 3");
+		Command command = new Command("SELECT * FROM "
+				+ TABLE_NAME_RUNNER_HECTOR_TEST + " limit 3");
 
 		long timeMs = System.currentTimeMillis();
 		long timeNs = System.nanoTime();
@@ -137,15 +151,17 @@ public class RunnerTest {
 	public void ttlTest() throws CEUException, InterruptedException {
 
 		int time = 1;// seconds
-		Command command = new Command(
-				"INSERT INTO test (key,email,age,tag_1) VALUES (?,?,?,?) USING TTL ?",
+		Command command = new Command("INSERT INTO "
+				+ TABLE_NAME_RUNNER_HECTOR_TEST
+				+ " (key,email,age,tag_1) VALUES (?,?,?,?) USING TTL ?",
 				"userTest12", "userTest15@gmail.com", 45, "Pelé1", time);
 		runner.exec(command);
 
 		BeanHandler<AccountTestBean> handler = new BeanHandler<>(
 				AccountTestBean.class);
 
-		command = new Command("SELECT * FROM test WHERE key = ?", "userTest12");
+		command = new Command("SELECT * FROM " + TABLE_NAME_RUNNER_HECTOR_TEST
+				+ " WHERE key = ?", "userTest12");
 
 		AccountTestBean account = runner.query(command, handler);
 
@@ -163,7 +179,8 @@ public class RunnerTest {
 		BeanListHandler<AccountTestBean> handler = new BeanListHandler<>(
 				AccountTestBean.class);
 
-		Command command = new Command("SELECT * FROM test limit 3");
+		Command command = new Command("SELECT * FROM "
+				+ TABLE_NAME_RUNNER_HECTOR_TEST + " limit 3");
 
 		runner.query(command, handler);
 
