@@ -17,7 +17,7 @@
 	<groupId>com.taulukko.commons</groupId>
 	<artifactId>taulukko-commons-ceu</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.2-SNAPSHOT</version>
+	<version>1.2.2</version>
 
 
 	<properties>
