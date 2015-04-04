@@ -1,5 +1,7 @@
 package com.taulukko.cassandra.astyanax;
 
+import integration.com.taulukko.cassandra.InitializeTests;
+
 import java.math.BigInteger;
 import java.text.ParseException;
 
@@ -15,7 +17,6 @@ import com.taulukko.cassandra.Command;
 import com.taulukko.cassandra.astyanax.FactoryDataSourceAstyanax;
 import com.taulukko.cassandra.astyanax.RunnerAstyanax;
 import com.taulukko.cassandra.astyanax.handler.BeanHandler;
-import com.taulukko.common.ceu.test.InitializeTests;
 
 public class IgnoreCaseSensitive {
 

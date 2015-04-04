@@ -1,5 +1,7 @@
 package com.taulukko.cassandra.hector;
 
+import integration.com.taulukko.cassandra.InitializeTests;
+
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,6 @@ import com.taulukko.cassandra.hector.handler.BeanHandler;
 import com.taulukko.cassandra.hector.handler.BeanListHandler;
 import com.taulukko.cassandra.hector.handler.SingleObjectHandler;
 import com.taulukko.cassandra.hector.handler.SliceHandler;
-import com.taulukko.common.ceu.test.InitializeTests;
 
 public class HandlerTest {
 

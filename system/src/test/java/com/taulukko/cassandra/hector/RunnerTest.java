@@ -1,5 +1,7 @@
 package com.taulukko.cassandra.hector;
 
+import integration.com.taulukko.cassandra.InitializeTests;
+
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -14,7 +16,6 @@ import com.taulukko.cassandra.hector.FactoryDataSourceHector;
 import com.taulukko.cassandra.hector.RunnerHector;
 import com.taulukko.cassandra.hector.handler.BeanHandler;
 import com.taulukko.cassandra.hector.handler.BeanListHandler;
-import com.taulukko.common.ceu.test.InitializeTests;
 
 public class RunnerTest {
 

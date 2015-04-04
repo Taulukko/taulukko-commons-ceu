@@ -1,5 +1,7 @@
 package com.taulukko.cassandra.astyanax;
 
+import integration.com.taulukko.cassandra.InitializeTests;
+
 import java.math.BigInteger;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -32,7 +34,6 @@ import com.netflix.astyanax.serializers.IntegerSerializer;
 import com.netflix.astyanax.serializers.MapSerializer;
 import com.netflix.astyanax.serializers.StringSerializer;
 import com.netflix.astyanax.thrift.ThriftFamilyFactory;
-import com.taulukko.common.ceu.test.InitializeTests;
 
 public class NetflixAstyanaxTest {
 

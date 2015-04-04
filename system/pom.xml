@@ -126,10 +126,13 @@
 							<goal>test</goal>
 						</goals>
 						<configuration>
-							<skip>false</skip>
+							<skip>true</skip>
 							<includes>
-								<include>teste/**/*IntegrationTest.java</include>
+								<include>**/*Test.java</include>
 							</includes>
+							<excludes>
+								<exclude>integration/**/*Test.java</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 					<execution>
@@ -142,7 +145,7 @@
 							<skip>false</skip>
 							<enableAssertions>false</enableAssertions>
 							<includes>
-								<include>a/**/*Test.java</include>
+								<include>integration/**/*Test.java</include>
 							</includes>
 							<systemPropertyVariables>
 								<integration>${integration}</integration>
@@ -151,8 +154,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- begin integration test --> 
-			 
+			<!-- begin integration test -->
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cassandra-maven-plugin</artifactId>
@@ -166,7 +169,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			 
+
 			<!-- end integration test -->
 		</plugins>
 

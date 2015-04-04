@@ -1,4 +1,4 @@
-package com.taulukko.common.ceu.test;
+package integration.com.taulukko.cassandra;
 
 import com.taulukko.cassandra.CEUConfig;
 import com.taulukko.cassandra.CEUException;

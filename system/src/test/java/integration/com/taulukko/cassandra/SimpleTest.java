@@ -1,4 +1,4 @@
-package a;
+package integration.com.taulukko.cassandra;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,7 +20,6 @@ import com.taulukko.cassandra.Command;
 import com.taulukko.cassandra.astyanax.CEUUtils;
 import com.taulukko.cassandra.astyanax.FactoryDataSourceAstyanax;
 import com.taulukko.cassandra.astyanax.RunnerAstyanax;
-import com.taulukko.common.ceu.test.InitializeTests;
 
 public class SimpleTest {
 

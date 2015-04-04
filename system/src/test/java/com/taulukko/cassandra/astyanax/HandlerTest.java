@@ -1,5 +1,7 @@
 package com.taulukko.cassandra.astyanax;
 
+import integration.com.taulukko.cassandra.InitializeTests;
+
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -28,7 +30,6 @@ import com.taulukko.cassandra.astyanax.handler.ListHandler;
 import com.taulukko.cassandra.astyanax.handler.MapHandler;
 import com.taulukko.cassandra.astyanax.handler.SetHandler;
 import com.taulukko.cassandra.astyanax.handler.SingleObjectHandler;
-import com.taulukko.common.ceu.test.InitializeTests;
 
 public class HandlerTest {
 

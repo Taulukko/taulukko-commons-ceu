@@ -1,5 +1,7 @@
 package com.taulukko.cassandra;
 
+import integration.com.taulukko.cassandra.InitializeTests;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +17,6 @@ import com.taulukko.cassandra.CEUException;
 import com.taulukko.cassandra.Command;
 import com.taulukko.cassandra.Handler;
 import com.taulukko.cassandra.Runner;
-import com.taulukko.common.ceu.test.InitializeTests;
 
 public class FillParametersTest {
 
