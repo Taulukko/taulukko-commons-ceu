@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	
+=======
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+>>>>>>> Version1.2.1
 	<modelVersion>4.0.0</modelVersion>
 
 	<name>Taulukko Commons Cassandra Extended Utils</name>
 	<description>Framework to easy access to Cassandra</description>
 	<url>https://github.com/Taulukko/taulukko-commons-ceu</url>
+<<<<<<< HEAD
 	
 	
+=======
+
+
+>>>>>>> Version1.2.1
 	<organization>
 		<name>Taulukko</name>
 		<url>http://www.taulukko.com.br</url>
@@ -17,6 +28,7 @@
 	<artifactId>taulukko-commons-ceu</artifactId>
 	<packaging>jar</packaging>
 	<version>1.1.1-SNAPSHOT</version>
+<<<<<<< HEAD
   
 	
 	<properties>
@@ -38,60 +50,121 @@
  
 				
 		<!--compilation-->
+=======
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>4.11</junit.version>
+		<jdk.version>1.7</jdk.version>
+	</properties>
+
+	<!-- [ means closet, inclusive. ) means open, excluisive. Eg. [1.0.0,2.0.0) 
+		means 1.0.0 - > 2.0.0 (except 2.0.0) -->
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+		<!--compilation -->
+>>>>>>> Version1.2.1
 
 		<dependency>
 			<groupId>com.taulukko.commons</groupId>
 			<artifactId>taulukko-commons-parsers</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> Version1.2.1
 		<dependency>
 			<groupId>com.netflix.astyanax</groupId>
 			<artifactId>astyanax</artifactId>
 			<version>1.56.48</version>
 		</dependency>
+<<<<<<< HEAD
 		
   
 		  <dependency>
+=======
+
+
+		<dependency>
+>>>>>>> Version1.2.1
 			<groupId>com.datastax.cassandra</groupId>
 			<artifactId>cassandra-driver-core</artifactId>
 			<version>2.0.0</version>
 		</dependency>
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> Version1.2.1
 		<dependency>
 			<groupId>org.apache.cassandra</groupId>
 			<artifactId>cassandra-all</artifactId>
 			<version>1.2.2</version>
 		</dependency>
+<<<<<<< HEAD
 				
 				
+=======
+
+
+>>>>>>> Version1.2.1
 		<dependency>
 			<groupId>org.apache.cassandra</groupId>
 			<artifactId>cassandra-thrift</artifactId>
 			<version>2.0.2</version>
 		</dependency>
+<<<<<<< HEAD
 		
 		
+=======
+
+
+>>>>>>> Version1.2.1
 		<dependency>
 			<groupId>org.apache.thrift</groupId>
 			<artifactId>libthrift</artifactId>
 			<version>0.9.1</version>
 		</dependency>
 
+<<<<<<< HEAD
 		
 		
+=======
+
+
+>>>>>>> Version1.2.1
 		<dependency>
 			<groupId>org.apache.cassandra</groupId>
 			<artifactId>cassandra-clientutil</artifactId>
 			<version>2.0.2</version>
 		</dependency>
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> Version1.2.1
 		<dependency>
 			<groupId>org.hectorclient</groupId>
 			<artifactId>hector-core</artifactId>
 			<version>1.1-0</version>
 		</dependency>
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> Version1.2.1
 	</dependencies>
 
 	<build>
@@ -105,6 +178,7 @@
 					<target>${jdk.version}</target>
 				</configuration>
 			</plugin>
+<<<<<<< HEAD
 			 
 			 <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -125,10 +199,79 @@
 	</build>
 	
 	<profiles>		 
+=======
+
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+							<includes>
+								<include>teste/**/*IntegrationTest.java</include>
+							</includes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>integration-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+							<enableAssertions>false</enableAssertions>
+							<includes>
+								<include>a/**/*Test.java</include>
+							</includes>
+							<systemPropertyVariables>
+								<integration>${integration}</integration>
+							</systemPropertyVariables>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- begin integration test --> 
+			 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cassandra-maven-plugin</artifactId>
+				<version>2.0.0-1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>start</goal>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			 
+			<!-- end integration test -->
+		</plugins>
+
+	</build>
+
+	<profiles>
+>>>>>>> Version1.2.1
 		<profile>
 			<id>production</id>
 			<activation>
 				<property>
+<<<<<<< HEAD
 			      <name>profile</name>
 			      <value>production</value>
 		      	</property>
@@ -157,19 +300,61 @@
 				    </plugin> 
 					
 					 <plugin>
+=======
+					<name>profile</name>
+					<value>production</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<echo>Replace file...</echo>
+										<delete file="${project.build.outputDirectory}/taulukko.properties" />
+										<copy file="${project.build.outputDirectory}/taulukko.properties"
+											tofile="${project.build.outputDirectory}/taulukko.properties"
+											overwrite="true" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+>>>>>>> Version1.2.1
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<version>2.18.1</version>
 						<configuration>
 							<includes>
+<<<<<<< HEAD
 								<include>**/noTest/**/*Test.java</include>								
+=======
+								<include>**/noTest/**/*Test.java</include>
+>>>>>>> Version1.2.1
 							</includes>
 						</configuration>
 					</plugin>
 				</plugins>
 			</build>
+<<<<<<< HEAD
 		</profile> 
 	</profiles>
 
 	 
+=======
+		</profile>
+	</profiles>
+
+
+>>>>>>> Version1.2.1
 </project>

@@ -14,7 +14,6 @@ public class DataSourceCommon implements DataSource<Keyspace> {
 	public DataSourceCommon(String clusterName, String keyspaceName,
 			String hostname, int port) {
 
-		// "Evon Cluster 01","localhost:9160","oauth"
 		cluster = HFactory.getOrCreateCluster(clusterName, hostname + ":"
 				+ port);
 		this.keyspace = HFactory.createKeyspace(keyspaceName, cluster);
@@ -25,5 +24,11 @@ public class DataSourceCommon implements DataSource<Keyspace> {
 	public Keyspace getKeyspace() {
 		return keyspace;
 	}
+
+	@Override
+	public void release() {
+	}
+	
+	
 
 }
