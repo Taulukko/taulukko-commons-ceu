@@ -1,26 +1,27 @@
 {
+	fileObjective : "CEU config file example", 
 	sliceSeparator:"_",
-	isAutoWrapItemName:false,
+	isAutoWrapItemName:true,
 	servers:
 	[
-		{
-			clusterName:"Evon Cluster 01",
-			keyspace:"oauth",
+		{ 
+			clusterName:"Test Cluster",
+			keyspace:"keySpaceTest",
 			hostName:"localhost",
 			port:9160,
-			default:false,
-			maxConsPerHost:30, 
+			primary:false,
+			maxConsPerHost:30,
 			maxTimeoutWhenExhausted:120000,
 			socketTimeout:60000,
 			connectTimeout:10000
 		},
 		{
-			clusterName:"Evon Cluster 01",
-			keyspace:"bb",
+			clusterName:"Taulukko Cluster 01",
+			keyspace:"example",
 			hostName:"localhost",
-			port:9160,
-			default:true,
-			maxConsPerHost:3,
+			port:9160, 
+			primary:true,
+			maxConsPerHost:30,
 			maxTimeoutWhenExhausted:120000,
 			socketTimeout:60000,
 			connectTimeout:10000

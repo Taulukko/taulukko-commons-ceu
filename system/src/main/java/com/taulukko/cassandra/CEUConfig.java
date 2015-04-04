@@ -19,7 +19,8 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
-import com.evon.jsonParser.JSONParser;
+import com.taulukko.commons.parsers.jsonParser.JSONParser;
+ 
 
 public class CEUConfig extends Thread {
 

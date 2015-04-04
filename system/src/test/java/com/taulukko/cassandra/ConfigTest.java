@@ -3,9 +3,7 @@ package com.taulukko.cassandra;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.evon.jsonParser.JSONParser;
-import com.taulukko.cassandra.ConfigBean;
-import com.taulukko.cassandra.ServerInfo;
+import com.taulukko.commons.parsers.jsonParser.JSONParser;
 
 public class ConfigTest {
 
