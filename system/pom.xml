@@ -17,7 +17,7 @@
 	<groupId>com.taulukko.commons</groupId>
 	<artifactId>taulukko-commons-ceu</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.2</version>
+	<version>1.2.5-SNAPSHOT</version>
 
 
 	<properties>
@@ -36,7 +36,7 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+ 
 
 
 		<!--compilation -->
@@ -44,13 +44,40 @@
 		<dependency>
 			<groupId>com.taulukko.commons</groupId>
 			<artifactId>taulukko-commons-parsers</artifactId>
-			<version>1.0.2</version>
+			<version>1.0.3</version>
+		</dependency>
+		 
+		
+		<!-- Astyanax need commons-lang 2.4 but not have this dependency in your jar -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.netflix.astyanax</groupId>
 			<artifactId>astyanax</artifactId>
 			<version>1.56.48</version>
+
+			<exclusions>
+				<exclusion>
+					<artifactId>jersey-client</artifactId>
+					<groupId>com.sun.jersey</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jersey-bundle</artifactId>
+					<groupId>com.sun.jersey</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jersey-core</artifactId>
+					<groupId>com.sun.jersey</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jersey-apache-client4</artifactId>
+					<groupId>com.sun.jersey.contribs</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -222,6 +249,14 @@
 			</build>
 		</profile>
 	</profiles>
+
+	<distributionManagement>
+	    <repository>
+	        <id>taulukko-etc</id>
+	        <name>taulukko-etc-releases</name>
+	        <url>http://repository.taulukko.com.br/libs-release-local</url>
+	    </repository>
+	</distributionManagement>
 
 
 </project>
