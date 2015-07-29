@@ -64,6 +64,8 @@ public class CEUUtils {
 			String hostname, int port, String clusterName, String keyspaceName,
 			int maxConnsPerHost, int maxTimeoutWhenExhausted,
 			int connectTimeout, int socketTimeout) {
+		ThriftFamilyFactory factoryFamily = ThriftFamilyFactory.getInstance();
+		
 		AstyanaxContext<Keyspace> context = new AstyanaxContext.Builder()
 				.forCluster(clusterName)
 				.forKeyspace(keyspaceName)
@@ -122,7 +124,7 @@ public class CEUUtils {
 								.setSocketTimeout(socketTimeout))
 
 				.withConnectionPoolMonitor(new CountingConnectionPoolMonitor())
-				.buildKeyspace(ThriftFamilyFactory.getInstance());
+				.buildKeyspace(factoryFamily);
 		return context;
 	}
 }
