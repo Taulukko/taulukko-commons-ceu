@@ -17,7 +17,7 @@
 	<groupId>com.taulukko.commons</groupId>
 	<artifactId>taulukko-commons-ceu</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.5-SNAPSHOT</version>
+	<version>1.2.6-SNAPSHOT</version>
 
 
 	<properties>
@@ -39,12 +39,12 @@
  
 
 
-		<!--compilation -->
-
+ 
+		
 		<dependency>
-			<groupId>com.taulukko.commons</groupId>
-			<artifactId>taulukko-commons-parsers</artifactId>
-			<version>1.0.5</version>
+	    	<groupId>com.taulukko.commons</groupId>
+	    	<artifactId>taulukko-commons-parsers</artifactId>
+	    	<version>1.0.5</version>
 		</dependency>
 		 
 		
@@ -54,6 +54,9 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.4</version>
 		</dependency>
+		 
+
+		<!-- INICIO DA VERSAO MAIS ANTIGA --> 
 
 		<dependency>
 			<groupId>com.netflix.astyanax</groupId>
@@ -91,6 +94,12 @@
 			<groupId>org.apache.cassandra</groupId>
 			<artifactId>cassandra-all</artifactId>
 			<version>1.2.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>metrics-core</artifactId>
+					<groupId>com.yammer.metrics</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -119,8 +128,14 @@
 			<groupId>org.hectorclient</groupId>
 			<artifactId>hector-core</artifactId>
 			<version>2.0-0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>metrics-core</artifactId>
+					<groupId>com.yammer.metrics</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
+	<!-- fim da versao antiga -->
 	</dependencies>
 
 	<build>
@@ -249,14 +264,6 @@
 			</build>
 		</profile>
 	</profiles>
-
-	<distributionManagement>
-	    <repository>
-	        <id>taulukko-etc</id>
-	        <name>taulukko-etc-releases</name>
-	        <url>http://repository.taulukko.com.br/libs-release-local</url>
-	    </repository>
-	</distributionManagement>
-
-
+ 
+ 
 </project>
