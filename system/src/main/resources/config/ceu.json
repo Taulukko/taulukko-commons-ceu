@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 {
 	fileObjective : "CEU config file example", 
 	sliceSeparator:"_",
@@ -25,6 +27,69 @@
 			maxTimeoutWhenExhausted:120000,
 			socketTimeout:60000,
 			connectTimeout:10000
-		}
+		} 
+	]
+=======
+{
+	fileObjective : "CEU config file example", 
+	sliceSeparator:"_",
+	isAutoWrapItemName:true,
+	servers:
+	[
+		{ 
+			clusterName:"Test Cluster",
+			keyspace:"keySpaceTest",
+			hostName:"localhost",
+			port:9160,
+			primary:false,
+			maxConsPerHost:30,
+			maxTimeoutWhenExhausted:120000,
+			socketTimeout:60000,
+			connectTimeout:10000
+		},
+		{
+			clusterName:"Taulukko Cluster 01",
+			keyspace:"example",
+			hostName:"localhost",
+			port:9160, 
+			primary:true,
+			maxConsPerHost:30,
+			maxTimeoutWhenExhausted:120000,
+			socketTimeout:60000,
+			connectTimeout:10000
+		} 
+	]
+>>>>>>> branch 'master' of https://github.com/Taulukko/taulukko-commons-ceu.git
+}
+=======
+{
+	fileObjective : "CEU config file example", 
+	sliceSeparator:"_",
+	isAutoWrapItemName:true,
+	servers:
+	[
+		{ 
+			clusterName:"Test Cluster",
+			keyspace:"keySpaceTest",
+			hostName:"localhost",
+			port:9160,
+			primary:false,
+			maxConsPerHost:30,
+			maxTimeoutWhenExhausted:120000,
+			socketTimeout:60000,
+			connectTimeout:10000
+		},
+		{
+			clusterName:"Taulukko Cluster 01",
+			keyspace:"example",
+			hostName:"localhost",
+			port:9160, 
+			primary:true,
+			maxConsPerHost:30,
+			maxTimeoutWhenExhausted:120000,
+			socketTimeout:60000,
+			connectTimeout:10000
+		} 
 	]
 }
+>>>>>>> refs/remotes/origin/master

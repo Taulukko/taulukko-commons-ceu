@@ -1,3 +1,5 @@
+ 
+ 
 package integration.com.taulukko.cassandra.astyanax;
 
 import integration.com.taulukko.cassandra.BaseTest;
@@ -16,7 +18,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.taulukko.cassandra.AccountTestBean;
@@ -33,7 +34,7 @@ import com.taulukko.cassandra.astyanax.handler.SetHandler;
 import com.taulukko.cassandra.astyanax.handler.SingleObjectHandler;
 
 public class HandlerTest extends BaseTest {
-
+ 
 	private static RunnerAstyanax runner = null;
 	private static String TABLE_NAME = "handlerTest";
 
@@ -154,7 +155,7 @@ public class HandlerTest extends BaseTest {
 
 	/** TODO: The error ocurrs because the lexic analyser. The active lexic analyser cant know if already the "*/
 	@Test
-	@Ignore
+	
 	public void ttlWithWrapItemName() throws CEUException, ParseException,
 			InterruptedException {
 		CEUConfig.isAutoWrapItemName = true;
@@ -198,7 +199,7 @@ public class HandlerTest extends BaseTest {
 	/** TODO: The error ocurrs because the lexic analyser. */
 	
 	@Test
-	@Ignore
+	
 	public void ttlNoInjectWithWrapItemName() throws CEUException,
 			ParseException, InterruptedException {
 
@@ -412,4 +413,4 @@ public class HandlerTest extends BaseTest {
 
 	}
 
-}
+}   

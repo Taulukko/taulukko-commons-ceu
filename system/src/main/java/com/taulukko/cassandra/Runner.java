@@ -10,6 +10,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
+import cql.Token;
+import cql.TokenType;
+import cql.lexicalparser.LexicalParser;
+import cql.lexicalparser.exceptions.CQLReplaceException;
+import cql.lexicalparser.exceptions.LexicalParserException;
+
 public abstract class Runner<Q> {
 
 	private static Set<String> reservedWords = new HashSet<>();
@@ -42,51 +48,54 @@ public abstract class Runner<Q> {
 				"^", "(", ")", "{", "}", "[", "]", "|", "&", ",", ":", ";"));
 	}
 
+	protected static int countToken(Token token, final TokenType type) {
+		int count = (token.getType().equals(type)) ? 1 : 0;
+
+		count += token.getSubTokens().stream()
+				.mapToInt(t -> countToken(t, type)).sum();
+
+		return count;
+
+	}
+
 	public String fillParameters(String query, Object[] parameters)
 			throws CEUException {
 
+		LexicalParser parser = new LexicalParser();
+		Token cql = null;
+
+		try {
+			cql = parser.isCQL(query);
+		} catch (LexicalParserException e) {
+			throw new CEUException("LexicalParserException", e);
+		}
+
+		if (cql == null) {
+			throw new CEUException("LexicalParserException : command [" + query
+					+ "] hasn't a CQL Query");
+		}
+
 		List<TokenQuery> tokens = lexicAnalizer(query);
+		int injectCount = countInjectValues(tokens);
 
-		int count = countInjectValues(tokens);
+		injectCount = countToken(cql, TokenType.INJECT);
 
-		if (count != parameters.length) {
+		if (injectCount != parameters.length) {
 			throw new CEUException("Wrong number of parameters in : " + query
 					+ " (" + parameters.toString() + ")");
 		}
 
-		StringBuffer ret = new StringBuffer();
-
-		int indexParameter = 0;
-
-		boolean whereFound = false;
-
-		for (TokenQuery token : tokens) {
-			if (token.getType() == TokenQuery.VALUE_INJECT) {
-				if (indexParameter >= parameters.length) {
-					throw new CEUException("Wrong number of parameters in : "
-							+ query + " (" + parameters.toString() + ")");
-				}
-				Object parameter = parameters[indexParameter++];
-				if (parameter == null) {
-					if (whereFound) {
-						throw new CEUException(
-								"In WHERE clausule, parameter cannot be null : "
-										+ query + " (" + parameters.toString()
-										+ ")");
-					}
-					ret.append("null");
-				} else {
-					ret.append(format(parameter));
-				}
-			} else {
-				if (token.getType() == TokenQuery.WHERE) {
-					whereFound = true;
-				}
-				ret.append(token.getContent());
+		for (int index = 0; index < injectCount; index++) {
+			try {
+				cql.replace(TokenType.INJECT, parameters[index], index);
+			} catch (CQLReplaceException e) {
+				throw new CEUException(
+						"Error in replace inject parameter index [" + index
+								+ "]");
 			}
 		}
 
-		return ret.toString().trim();
+		return cql.getContent();
 	}
 
 	private List<TokenQuery> lexicAnalizer(String query) {

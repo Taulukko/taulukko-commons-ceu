@@ -23,7 +23,7 @@ public class FillParametersTest {
 	@BeforeClass
 	public static void init() throws CEUException {
 		TestUtil.start();
-		 
+
 		runner = new Runner<Object>() {
 			@Override
 			public void exec(Command command) throws CEUException {
@@ -36,13 +36,11 @@ public class FillParametersTest {
 			}
 		};
 	}
-	
+
 	@Before
-	public void reset()
-	{
+	public void reset() {
 		CEUConfig.isAutoWrapItemName = false;
 	}
-	
 
 	@Test(expected = CEUException.class)
 	public void fillQueryFewParameters() throws CEUException {
@@ -79,22 +77,18 @@ public class FillParametersTest {
 
 		Assert.assertEquals(
 				"UPDATE accounts SET email='1', password='2',lastAccess='2013-11-12 19:54:32+0000',"
-				+ "name=null,lastIP=null WHERE key='232'",
-				result);
+						+ "name=null,lastIP=null WHERE key='232'", result);
 
 	}
-	
+
 	@Test
 	public void fillBoolean() throws CEUException, ParseException {
 
-		String sql = "UPDATE accounts "
-				+ " SET isNewbie=? ";
+		String sql = "UPDATE accounts " + " SET isNewbie=? ";
 
 		String result = runner.fillParameters(sql, new Object[] { true });
 
-		Assert.assertEquals(
-				"UPDATE accounts SET isNewbie=true",
-				result);
+		Assert.assertEquals("UPDATE accounts SET isNewbie=true", result);
 
 	}
 
@@ -114,62 +108,69 @@ public class FillParametersTest {
 
 	@Test
 	public void fillQuery() throws CEUException, ParseException {
-		String result = runner.fillParameters("teste ? ? ?", new Object[] {
-				"34", "23", "12" });
-		Assert.assertEquals("teste '34' '23' '12'", result);
+		String result = runner.fillParameters(
+				"SELECT a FROM X WHERE a= ? and b= ? and c= ?", new Object[] {
+						"34", "23", "12" });
+		Assert.assertEquals(
+				"SELECT a FROM X WHERE a= '34' and b= '23' and c= '12'", result);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ssZ");
 
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		Date date = sdf.parse("2013/01/02 04:05:06-0700");
-		result = runner.fillParameters("teste ? ? ?", new Object[] { date, 34,
-				"12" });
-		Assert.assertEquals("teste '2013-01-02 11:05:06+0000' 34 '12'", result);
+		result = runner.fillParameters(
+				"SELECT a FROM X WHERE a= ? and b= ? and c = ?", new Object[] {
+						34, "12", date });
+		Assert.assertEquals(
+				"SELECT a FROM X WHERE a= 34 and b= '12' and c = '2013-01-02 11:05:06+0000'",
+				result);
 
 	}
 
+
 	@Test
 	public void fillQueryInject() throws CEUException, ParseException {
-		String result = runner.fillParameters("teste ? ? ?", new Object[] {
+		String result = runner.fillParameters("2611", new Object[] {
 				"a' ; INSERT INTO teste values(23)", "23", "12" });
 		Assert.assertEquals(
 				"teste 'a'' ; INSERT INTO teste values(23)' '23' '12'", result);
 	}
 
-	@Test
+	@Test	
 	public void fillWrap() throws CEUException, ParseException {
 		CEUConfig.isAutoWrapItemName = true;
-		String result = runner.fillParameters("INSERT INTO teste WHERE teste.a =  ? AND b = ?", new Object[] {
-				"a",  12 });
+		String result = runner.fillParameters(
+				"UPDATE teste set teste.a=? WHERE b = ?", new Object[] { "a",
+						12 });
+
 		Assert.assertEquals(
-				"INSERT INTO \"teste\" WHERE \"teste\".\"a\" = 'a' AND \"b\" = 12",
+				"UPDATE \"teste\" set \"teste\".\"a\" = 'a' WHERE \"b\" = 12",
 				result);
+
 	}
 
 	@Test
 	public void fillQueryEndTest() throws CEUException, ParseException {
 
-		String result = runner.fillParameters("teste ? ? ?", new Object[] {
-				"34", "23", "12" });
-		Assert.assertEquals("teste '34' '23' '12'", result);
-
-		result = runner.fillParameters("teste ? ? ?", new Object[] { "34",
-				"23", "12" });
-		Assert.assertEquals("teste '34' '23' '12'", result);
+		String result = runner.fillParameters(
+				"select * from teste where ? = ? using ttl ?", new Object[] {
+						34, 23, 12 });
+		Assert.assertEquals("select * from teste where 34 = 23 using ttl 12",
+				result);
 
 	}
 
 	@Test
 	public void fillQueryIgnore() throws CEUException, ParseException {
-		String result = runner.fillParameters("teste ? ? field='??'",
+		String result = runner.fillParameters("select ?, ? from testeE where  field='??'",
 				new Object[] { "34", "23" });
-		Assert.assertEquals("teste '34' '23' field='??'", result);
+		Assert.assertEquals("select '34', '23' from testeE where field='??'", result);
 
 	}
 
 	@Test(timeout = 2000)
 	public void fillInfinityLoopInTheEnd() throws CEUException, ParseException {
-		runner.fillParameters("teste ? ? field='??'",
+		runner.fillParameters("select testE from a where ? = ? or fa='??'",
 				new Object[] { "34", "23" });
 
 	}

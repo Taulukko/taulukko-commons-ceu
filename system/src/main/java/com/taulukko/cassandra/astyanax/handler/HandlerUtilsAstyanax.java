@@ -1,3 +1,5 @@
+ 
+ 
 package com.taulukko.cassandra.astyanax.handler;
 
 import java.lang.reflect.InvocationTargetException;
@@ -69,103 +71,112 @@ public class HandlerUtilsAstyanax extends HandlerUtils {
 	public static <T> T bufferToObject(byte buffer[], Class<T> clazz,
 			Class<?> K, Class<?> V) throws CEUException {
 
-		boolean isMap = Map.class.equals(clazz);
-		boolean isList = List.class.equals(clazz);
-		boolean isSet = Set.class.equals(clazz);
+		try {
+			boolean isMap = Map.class.equals(clazz);
+			boolean isList = List.class.equals(clazz);
+			boolean isSet = Set.class.equals(clazz);
 
-		if (clazz.equals(String.class)) {
-			return (T) StringSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(byte[].class)) {
-			return (T) buffer;
-		} else if (clazz.equals(int.class)) {
-			return (T) IntegerSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(short.class)) {
-			return (T) ShortSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(long.class)) {
-			return (T) LongSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(float.class)) {
-			return (T) FloatSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(double.class)) {
-			return (T) DoubleSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(boolean.class)) {
-			return (T) BooleanSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(Integer.class)) {
-			return (T) IntegerSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(Short.class)) {
-			return (T) ShortSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(Long.class)) {
-			return (T) LongSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(Date.class)) {
-			return (T) DateSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(Boolean.class)) {
-			return (T) BooleanSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(Float.class)) {
-			return (T) FloatSerializer.get().fromBytes(buffer);
-		} else if (clazz.equals(Double.class)) {
-			return (T) DoubleSerializer.get().fromBytes(buffer);
-		} else if (isMap) {
+			if (clazz.equals(String.class)) {
+				return (T) StringSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(byte[].class)) {
+				return (T) buffer;
+			} else if (clazz.equals(int.class)) {
+				return (T) IntegerSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(short.class)) {
+				return (T) ShortSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(long.class)) {
+				return (T) LongSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(float.class)) {
+				return (T) FloatSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(double.class)) {
+				return (T) DoubleSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(boolean.class)) {
+				return (T) BooleanSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(Integer.class)) {
+				return (T) IntegerSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(Short.class)) {
+				return (T) ShortSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(Long.class)) {
+				return (T) LongSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(Date.class)) {
+				return (T) DateSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(Boolean.class)) {
+				return (T) BooleanSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(Float.class)) {
+				return (T) FloatSerializer.get().fromBytes(buffer);
+			} else if (clazz.equals(Double.class)) {
+				return (T) DoubleSerializer.get().fromBytes(buffer);
+			} else if (isMap) {
 
-			if (K == null || V == null) {
-				throw new CEUException(
-						"K and V vlaues is required to map object");
+				if (K == null || V == null) {
+					throw new CEUException(
+							"K and V vlaues is required to map object");
+				}
+
+				if (K.equals(Integer.class) || V.equals(Integer.class)) {
+					throw new CEUException(
+							"Change Integer to BigInteger in Map.");
+				}
+
+				if (K.equals(Float.class) || V.equals(Float.class)) {
+					throw new CEUException("Change Float to Double in Map.");
+				}
+				if (K.equals(BigInteger.class)) {
+					return (T) bufferToMapKeyInteger(buffer, V);
+				} else if (K.equals(String.class)) {
+					return (T) bufferToMapKeyString(buffer, V);
+				} else if (K.equals(Double.class)) {
+					return (T) bufferToMapKeyDouble(buffer, V);
+				} else if (K.equals(Date.class)) {
+					return (T) bufferToMapKeyDate(buffer, V);
+				}
+
+				throw new CEUException("Format Map<" + K.getName() + ","
+						+ V.getClass().getName() + ">");
+
+			} else if (isList) {
+
+				if (V == null) {
+					throw new CEUException("V vlaue is required to list object");
+				}
+
+				if (V.equals(Integer.class)) {
+					throw new CEUException(
+							"Change Integer to BigInteger in List.");
+				}
+
+				if (V.equals(Float.class)) {
+					throw new CEUException("Change Float to Double in List.");
+				}
+
+				return (T) bufferToList(buffer, V);
+
+			} else if (isSet) {
+
+				if (V == null) {
+					throw new CEUException("V vlaue is required to set object");
+				}
+
+				if (V.equals(Integer.class)) {
+					throw new CEUException(
+							"Change Integer to BigInteger in List.");
+				}
+
+				if (V.equals(Float.class)) {
+					throw new CEUException("Change Float to Double in List.");
+				}
+
+				return (T) bufferToSet(buffer, V);
+
+			} else {
+				throw new CEUException("Type unknown " + clazz.getName());
 			}
-
-			if (K.equals(Integer.class) || V.equals(Integer.class)) {
-				throw new CEUException("Change Integer to BigInteger in Map.");
-			}
-
-			if (K.equals(Float.class) || V.equals(Float.class)) {
-				throw new CEUException("Change Float to Double in Map.");
-			}
-			if (K.equals(BigInteger.class)) {
-				return (T) bufferToMapKeyInteger(buffer, V);
-			} else if (K.equals(String.class)) {
-				return (T) bufferToMapKeyString(buffer, V);
-			} else if (K.equals(Double.class)) {
-				return (T) bufferToMapKeyDouble(buffer, V);
-			} else if (K.equals(Date.class)) {
-				return (T) bufferToMapKeyDate(buffer, V);
-			}
-
-			throw new CEUException("Format Map<" + K.getName() + ","
-					+ V.getClass().getName() + ">");
-
-		} else if (isList) {
-
-			if (V == null) {
-				throw new CEUException("V vlaue is required to list object");
-			}
-
-			if (V.equals(Integer.class)) {
-				throw new CEUException("Change Integer to BigInteger in List.");
-			}
-
-			if (V.equals(Float.class)) {
-				throw new CEUException("Change Float to Double in List.");
-			}
-
-			return (T) bufferToList(buffer, V);
-
-		} else if (isSet) {
-
-			if (V == null) {
-				throw new CEUException("V vlaue is required to set object");
-			}
-
-			if (V.equals(Integer.class)) {
-				throw new CEUException("Change Integer to BigInteger in List.");
-			}
-
-			if (V.equals(Float.class)) {
-				throw new CEUException("Change Float to Double in List.");
-			}
-
-			return (T) bufferToSet(buffer, V);
-
-		} else {
-			throw new CEUException("Type unknown " + clazz.getName());
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			throw new CEUException(
+					"CEU Cannot be parse resultset, check if your bean have correct parameter types "
+							+ clazz.getName());
 		}
-
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -300,4 +311,4 @@ public class HandlerUtilsAstyanax extends HandlerUtils {
 		}
 	}
 
-}
+}  
