@@ -17,7 +17,7 @@
 	<groupId>com.taulukko.commons</groupId>
 	<artifactId>taulukko-commons-ceu</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0.0</version>
+	<version>2.2.1.0</version>
 
 
 	<properties>
@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>com.taulukko.commons</groupId> 
 			<artifactId>taulukko-commons-cql</artifactId>
-			<version>1.0.2.7</version>
+			<version>1.0.2.14</version>
     
 		</dependency> 
  
@@ -58,96 +58,26 @@
 			<artifactId>taulukko-commons-parsers</artifactId>
 			<version>1.0.5</version>
 		</dependency> 
-
-		<!-- Astyanax need commons-lang 2.4 but not have this dependency in your 
-			jar -->
+ 
+		  
+		 <!-- Datastax Driver--> 
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.4</version>
+		  <groupId>com.datastax.cassandra</groupId>
+		  <artifactId>cassandra-driver-core</artifactId>
+		  <version>3.0.0</version>
 		</dependency>
-
-
-		<!-- INICIO DA VERSAO MAIS ANTIGA -->
-
+		 
+		 <dependency>
+		  <groupId>com.datastax.cassandra</groupId>
+		  <artifactId>cassandra-driver-mapping</artifactId>
+		  <version>3.0.0</version>
+		</dependency>
+		
 		<dependency>
-			<groupId>com.netflix.astyanax</groupId>
-			<artifactId>astyanax</artifactId>
-			<version>1.56.48</version>
-
-			<exclusions>
-				<exclusion>
-					<artifactId>jersey-client</artifactId>
-					<groupId>com.sun.jersey</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jersey-bundle</artifactId>
-					<groupId>com.sun.jersey</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jersey-core</artifactId>
-					<groupId>com.sun.jersey</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jersey-apache-client4</artifactId>
-					<groupId>com.sun.jersey.contribs</groupId>
-				</exclusion>
-			</exclusions>
+		  <groupId>com.datastax.cassandra</groupId>
+		  <artifactId>cassandra-driver-extras</artifactId>
+		  <version>3.0.0</version>
 		</dependency>
-
-
-		<dependency>
-			<groupId>com.datastax.cassandra</groupId>
-			<artifactId>cassandra-driver-core</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.cassandra</groupId>
-			<artifactId>cassandra-all</artifactId>
-			<version>1.2.2</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>metrics-core</artifactId>
-					<groupId>com.yammer.metrics</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.apache.cassandra</groupId>
-			<artifactId>cassandra-thrift</artifactId>
-			<version>2.0.2</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.apache.thrift</groupId>
-			<artifactId>libthrift</artifactId>
-			<version>0.9.1</version>
-		</dependency>
-
-
-
-		<dependency>
-			<groupId>org.apache.cassandra</groupId>
-			<artifactId>cassandra-clientutil</artifactId>
-			<version>2.0.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hectorclient</groupId>
-			<artifactId>hector-core</artifactId>
-			<version>2.0-0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>metrics-core</artifactId>
-					<groupId>com.yammer.metrics</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- fim da versao antiga -->
 	</dependencies>
 
 	<build>
