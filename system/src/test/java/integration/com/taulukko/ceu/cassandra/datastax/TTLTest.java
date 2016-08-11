@@ -50,7 +50,7 @@ public class TTLTest extends BaseTest {
 	@Test
 	public void ttlTest() throws CEUException, InterruptedException {
 
-		// nao funciona por conta do analisador lexico que sera trocado
+		//static ttl
 		Command command = new Command("INSERT INTO " + TABLE_NAME
 				+ " (key,email,age) VALUES ( 'temporario1234', "
 				+ "'temporario@gmail.com', 45) USING TTL 2");
@@ -69,9 +69,9 @@ public class TTLTest extends BaseTest {
 		Thread.sleep(5000);
 
 
+		//dynamic ttl
 		Assert.assertFalse(runner.query(command, handler).isPresent());
 
-		// funciona
 		command = new Command("INSERT INTO " + TABLE_NAME
 				+ " (key,email,age) VALUES (?,?,?) USING TTL ?",
 				"temporario1234", "temporario@gmail.com", 45, 2);

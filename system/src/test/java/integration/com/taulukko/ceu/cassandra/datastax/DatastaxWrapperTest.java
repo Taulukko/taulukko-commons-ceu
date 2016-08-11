@@ -24,11 +24,9 @@ public class DatastaxWrapperTest {
 	@BeforeClass
 	public static void init() throws CEUException {
 		TestUtil.start();
-		
-		Factory factory = new DSDriver()
-				.getFactoryByContactPoint("localhost");
+
+		Factory factory = new DSDriver().getFactoryByContactPoint("localhost");
 		cluster = factory.getCluster();
- 
 
 		Metadata metadata = cluster.getMetadata();
 		Assert.assertNotNull(metadata.getClusterName());
@@ -83,22 +81,27 @@ public class DatastaxWrapperTest {
 	}
 
 	@AfterClass
-	public static void terminate() {
+	public static void terminate() throws CEUException {
 
 		cluster.close();
 	}
 
 	@Test
 	public void selectTest() throws CEUException {
-		Connection session = cluster.connect();
+		try {
+			Connection session = cluster.connect();
 
-		ResultSet results = session.execute("SELECT * FROM simplex.playlists "
-				+ "WHERE id = 2cc9ccb7-6221-4ccb-8387-f22b6a1b354d;");
+			ResultSet results = session
+					.execute("SELECT * FROM simplex.playlists "
+							+ "WHERE id = 2cc9ccb7-6221-4ccb-8387-f22b6a1b354d;");
 
-		Row row = results.one();
+			Row row = results.one();
 
-		Assert.assertEquals("La Petite Tonkinoise", row.getString("title"));
+			Assert.assertEquals("La Petite Tonkinoise", row.getString("title"));
 
-		session.close();
+			session.close();
+		} catch (RuntimeException re) {
+			throw new CEUException(re);
+		}
 	}
 }

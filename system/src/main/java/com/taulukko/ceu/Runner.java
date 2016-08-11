@@ -33,7 +33,7 @@ public class Runner {
 		Object parameters[] = command.getParameters();
 		query = fillParameters(query, parameters);
 
-		con.execute(query); 
+		con.execute(query);
 	}
 
 	public <T> Optional<T> query(Command command, Handler<T> handler)

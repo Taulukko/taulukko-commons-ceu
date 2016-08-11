@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
@@ -44,6 +42,8 @@ public class BaseTest {
 	public static void beforeClass() throws CEUException {
 
 		TestUtil.start();
+		
+		CEUConfig.isAutoWrapItemName = true;
 
 		Factory factory = new DSDriver().getFactoryByContactPoint("localhost");
 		Cluster cluster = factory.getCluster();
@@ -70,7 +70,7 @@ public class BaseTest {
 		command = new Command(
 				"INSERT INTO \""
 						+ TABLE_NAME
-						+ "\" (key,email,age,tags,\"friendsByName\",cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
+						+ "\" (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
 				"userTest", "userTesta@gmail.com", 45, "Pelé1", "Pelé2",
 				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
 		runner.exec(command);
@@ -78,7 +78,7 @@ public class BaseTest {
 		command = new Command(
 				"INSERT INTO \""
 						+ TABLE_NAME
-						+ "\" (key,email,age,tags,\"friendsByName\",cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?}) USING TTL 10",
+						+ "\" (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?}) USING TTL 10",
 				"userTestTime", "userTestb@gmail.com", 45, "Pelé1", "Pelé2",
 				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
 		runner.exec(command);
@@ -86,7 +86,7 @@ public class BaseTest {
 		command = new Command(
 				"INSERT INTO \""
 						+ TABLE_NAME
-						+ "\" (key,email,age,tags,\"friendsByName\",cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
+						+ "\" (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
 				"userTestTime2", "userTestc@gmail.com", 45, "Pelé1", "Pelé2",
 				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
 		runner.exec(command);
@@ -108,9 +108,9 @@ public class BaseTest {
 			command = new Command(
 					"INSERT INTO \""
 							+ TABLE_NAME
-							+ "\" (key,email,age,tags,\"friendsByName\",cmps) VALUES (?,?,?,?,?,?)",
-					"userTest" + index, "userTest" + index + "@gmail.com", 45, tags,
-					friendsByName, cmps);
+							+ "\" (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,?,?,?)",
+					"userTest" + index, "userTest" + index + "@gmail.com", 45,
+					tags, friendsByName, cmps);
 			runner.exec(command);
 
 		}
@@ -126,7 +126,7 @@ public class BaseTest {
 				"CREATE TABLE  "
 						+ TABLE_ICST
 						+ " (key varchar PRIMARY KEY,email text,age int,tags list<text>,"
-						+ " friendsByName map<text,int>, cmps set<int>)");
+						+ " \"friendsByName\" map<text,int>, cmps set<int>)");
 		runner.exec(command);
 
 		command = new Command(
@@ -138,21 +138,8 @@ public class BaseTest {
 		runner.exec(command);
 	}
 
-	@AfterClass
-	public static void afterClass() throws CEUException {
-
-		Command command = new Command("DROP TABLE \"" + TABLE_NAME + "\"");
-		runner.exec(command);
-
-		command = new Command("DROP TABLE " + TABLE_ICST);
-		runner.exec(command);
-
-	}
-
-	@After
-	public final void afterMethod() {
-		CEUConfig.isAutoWrapItemName = false;
-	}
+	 
+ 
 
 	public <T> T existOptional(Optional<T> o) {
 		Assert.assertTrue(o.isPresent());

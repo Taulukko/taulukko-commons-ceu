@@ -35,7 +35,7 @@ public class SingleHandlerTest extends BaseTest {
 
 		String email = existOptional(runner.query(command, handler));
 
-		Assert.assertEquals("userTest@gmail.com", email);
+		Assert.assertEquals("userTest1@gmail.com", email);
 	}
 
 }

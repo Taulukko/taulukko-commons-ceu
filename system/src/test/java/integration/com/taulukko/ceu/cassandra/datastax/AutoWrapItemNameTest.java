@@ -2,9 +2,7 @@ package integration.com.taulukko.ceu.cassandra.datastax;
 
 import java.text.ParseException;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.taulukko.cassandra.AccountTestBean;
@@ -14,21 +12,6 @@ import com.taulukko.ceu.Command;
 import com.taulukko.ceu.handler.BeanHandler;
 
 public class AutoWrapItemNameTest extends BaseTest {
-
-	private static boolean originalAutoWrapItemName = false;
-
-	@BeforeClass
-	public static void beforeClass() throws CEUException {
-
-		BaseTest.beforeClass();
-		originalAutoWrapItemName = CEUConfig.isAutoWrapItemName;
-	}
-
-	@AfterClass
-	public static void afterClass() throws CEUException {
-		BaseTest.afterClass();
-		CEUConfig.isAutoWrapItemName = originalAutoWrapItemName;
-	}
 
 	@Test
 	public void captureFieldsAutoWrapItemName() throws CEUException,
@@ -72,10 +55,8 @@ public class AutoWrapItemNameTest extends BaseTest {
 		Assert.assertEquals(6, accountBean.getOldid());
 	}
 
-	
-	@Test
-	public void captureFieldsAutoNotWrapItemName2() throws CEUException,
-			ParseException {
+	@Test(expected = CEUException.class)
+	public void nonAutoWrapExcption() throws CEUException, ParseException {
 
 		CEUConfig.isAutoWrapItemName = false;
 

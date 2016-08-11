@@ -1,6 +1,5 @@
 package integration.com.taulukko.ceu.cassandra.datastax;
 
-import java.math.BigInteger;
 import java.text.ParseException;
 
 import org.junit.Assert;
@@ -24,8 +23,8 @@ public class IgnoreCaseSensitiveTest extends BaseTest {
 
 		AccountTestBean account = existOptional(runner.query(command, handler));
 
-		Assert.assertEquals(new BigInteger("1"), account.getFriendsbyname()
-				.get("Eduardo"));
+		Assert.assertEquals(new Integer("1"),
+				account.getFriendsbyname().get("Eduardo"));
 		Assert.assertNull(account.getFriendsbyname().get("FriendElse"));
 	}
 

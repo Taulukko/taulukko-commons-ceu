@@ -40,7 +40,7 @@ public class BeanHandlerTest extends BaseTest {
 		Assert.assertFalse(runner.query(command, handler).isPresent());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test(expected = CEUException.class)
 	public void keyEmptyTest() throws CEUException, ParseException {
 
 		BeanHandler<AccountTestBean> handler = new BeanHandler<>(

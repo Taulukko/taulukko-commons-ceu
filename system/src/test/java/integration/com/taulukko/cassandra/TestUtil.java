@@ -68,9 +68,6 @@ public class TestUtil {
 
 				runner = new Runner(con);
 
-				// is need to not put double ""in friendsByName
-				CEUConfig.isAutoWrapItemName = false;
-
 				Command command = new Command(
 						"CREATE TABLE test "
 								+ " (key varchar PRIMARY KEY,email text,age int,tags list<text>,"
@@ -129,14 +126,13 @@ public class TestUtil {
 
 				for (int cont = 0; cont < 20; cont++) {
 					command = new Command(
-							"INSERT INTO accounts (key,name,\"oldId\" ) VALUES (?,?,?)",
+							"INSERT INTO accounts (key,name,oldId ) VALUES (?,?,?)",
 							"userTest" + cont, "Phillip " + cont, cont);
 					runner.exec(command);
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
-				throw new CEUException(e.getMessage());
+				throw new CEUException(e);
 			}
 		}
 

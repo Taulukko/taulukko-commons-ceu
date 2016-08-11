@@ -1,6 +1,7 @@
 package com.taulukko.ceu.cassandra.datastax;
 
 import com.datastax.driver.mapping.MappingManager;
+import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.data.Cluster;
 import com.taulukko.ceu.data.Configuration;
 import com.taulukko.ceu.data.Connection;
@@ -57,7 +58,7 @@ public class DSCluster implements Cluster {
 	 * @see com.taulukko.cassandra.datastax.Cluster#newSession()
 	 */
 	@Override
-	public Connection newSession() {
+	public Connection newSession() throws CEUException {
 		DSConnection dsConnection = new DSConnection(this,
 				coreCluster.newSession());
 		if (keyspaceDefault != null) {
@@ -85,7 +86,7 @@ public class DSCluster implements Cluster {
 	 * @see com.taulukko.cassandra.datastax.Cluster#connect()
 	 */
 	@Override
-	public Connection connect() {
+	public Connection connect() throws CEUException {
 		DSConnection dsConnection = null;
 
 		if (keyspaceDefault != null) {
@@ -107,7 +108,7 @@ public class DSCluster implements Cluster {
 	 * @see com.taulukko.cassandra.datastax.Cluster#connect(java.lang.String)
 	 */
 	@Override
-	public Connection connect(String keyspace) {
+	public Connection connect(String keyspace) throws CEUException {
 		DSConnection dsConnection = new DSConnection(this,
 				coreCluster.connect(keyspace));
 
