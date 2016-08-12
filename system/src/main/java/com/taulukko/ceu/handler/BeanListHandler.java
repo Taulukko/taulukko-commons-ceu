@@ -28,7 +28,7 @@ public class BeanListHandler<T> implements Handler<List<T>> {
 			Function<Exception, Boolean> onError, final List<Exception> errors) {
 		try {
 			return HandlerUtils.fillBean(row, clazz, onError);
-		} catch (RuntimeException | CEUException e) {
+		} catch (RuntimeException e) {
 			errors.add(e);
 			return Optional.empty();
 		}

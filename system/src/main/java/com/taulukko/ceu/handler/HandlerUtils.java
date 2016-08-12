@@ -16,6 +16,8 @@ import com.taulukko.ceu.data.Row;
 
 public abstract class HandlerUtils {
 
+
+	
 	@SuppressWarnings("unchecked")
 	public static <R> Optional<R> getValueFromObject(Object o, Class<R> clazzR,
 			String fieldName) throws CEUException {
@@ -67,8 +69,7 @@ public abstract class HandlerUtils {
 	}
 
 	public static <T> Optional<T> fillBean(Row row, Class<T> clazz,
-			Function<Exception, Boolean> onError) throws RuntimeException,
-			CEUException {
+			Function<Exception, Boolean> onError) throws RuntimeException {
 
 		ColumnDefinitions columnsDefinition = row.getColumnDefinitions();
 
@@ -109,8 +110,16 @@ public abstract class HandlerUtils {
 				parameterName = parameterName.toLowerCase();
 			}
 
-			ret = saveValueIntoMethod(row, onError, columnsDefinition, ret,
-					method, parameterName);
+			try {
+				ret = saveValueIntoMethod(row, onError, columnsDefinition, ret,
+						method, parameterName);
+			} catch (CEUException e) {
+				boolean quit = !onError.apply(e);
+				if (!quit) {
+					return Optional.empty();
+				}
+				throw new RuntimeException("Error ", e);
+			}
 
 		}
 		return Optional.of(ret);
