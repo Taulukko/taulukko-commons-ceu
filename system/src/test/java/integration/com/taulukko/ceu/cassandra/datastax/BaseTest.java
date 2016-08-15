@@ -71,16 +71,16 @@ public class BaseTest {
 				"INSERT INTO \""
 						+ TABLE_NAME
 						+ "\" (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
-				"userTest", "userTesta@gmail.com", 45, "Pelé1", "Pelé2",
-				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
+				"userTest", "userTesta@gmail.com", 45, "testa1", "testa2",
+				"testa3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
 		runner.exec(command);
 
 		command = new Command(
 				"INSERT INTO \""
 						+ TABLE_NAME
 						+ "\" (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?}) USING TTL 10",
-				"userTestTime", "userTestb@gmail.com", 45, "Pelé1", "Pelé2",
-				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
+				"userTestTime", "userTestb@gmail.com", 45, "Player1", "Player2",
+				"Player3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
 		runner.exec(command);
 
 		command = new Command(

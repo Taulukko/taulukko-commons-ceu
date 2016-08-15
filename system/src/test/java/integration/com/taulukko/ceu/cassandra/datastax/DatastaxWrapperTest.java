@@ -95,7 +95,7 @@ public class DatastaxWrapperTest {
 					.execute("SELECT * FROM simplex.playlists "
 							+ "WHERE id = 2cc9ccb7-6221-4ccb-8387-f22b6a1b354d;");
 
-			Row row = results.one();
+			Row row = results.next();
 
 			Assert.assertEquals("La Petite Tonkinoise", row.getString("title"));
 

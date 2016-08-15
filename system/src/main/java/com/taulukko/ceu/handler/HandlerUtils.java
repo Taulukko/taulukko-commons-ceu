@@ -67,7 +67,9 @@ public abstract class HandlerUtils {
 		}
 
 	}
-
+ 
+	  
+	 
 	public static <T> Optional<T> fillBean(Row row, Class<T> clazz,
 			Function<Exception, Boolean> onError) throws RuntimeException {
 

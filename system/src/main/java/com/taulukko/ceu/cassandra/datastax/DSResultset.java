@@ -27,16 +27,7 @@ public class DSResultset implements ResultSet {
 		return new DSColumnDefinitions(coreResultSet.getColumnDefinitions());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.taulukko.ceu.cassandra.datastax.Resultset#one()
-	 */
-	@Override
-	public Row one() {
-		return (Row) new DSRow(coreResultSet.one());
-	}
-
+	 
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -48,16 +39,7 @@ public class DSResultset implements ResultSet {
 				.collect(Collectors.toList());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.taulukko.ceu.cassandra.datastax.Resultset#iterator()
-	 */
-	@Override
-	public Iterator<Row> iterator() {
-		return coreResultSet.all().stream().map(r -> (Row) new DSRow(r))
-				.collect(Collectors.toList()).iterator();
-	}
+	 
 
 	/*
 	 * (non-Javadoc)

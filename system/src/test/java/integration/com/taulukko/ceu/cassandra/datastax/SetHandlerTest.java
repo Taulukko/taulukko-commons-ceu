@@ -1,8 +1,6 @@
 package integration.com.taulukko.ceu.cassandra.datastax;
 
 import java.text.ParseException;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.junit.After;
@@ -11,41 +9,17 @@ import org.junit.Test;
 
 import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.Command;
-import com.taulukko.ceu.handler.ListHandler;
+import com.taulukko.ceu.handler.BuilderSetHandler;
 import com.taulukko.ceu.handler.SetHandler;
 
 public class SetHandlerTest extends BaseTest {
 
 	@Test
-	public void setFromRow() throws CEUException, ParseException {
+	public void byAnyRowCollectbyFieldName() throws CEUException,
+			ParseException {
 
-		Command command = new Command(
-				"INSERT INTO "
-						+ TABLE_NAME
-						+ " (key,email,age,tags,\"friendsByName\",cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
-				"userTestset", "userTesta@gmail.com", 45, "Pelé1", "Pelé2",
-				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
-		runner.exec(command);
-
-		ListHandler<String> handler = new ListHandler<String>("email",
-				String.class);
-		SetHandler<String> handlerSet = new SetHandler<String>("email",
-				String.class);
-		command = new Command("SELECT email FROM " + TABLE_NAME
-				+ " where email= ? ALLOW FILTERING", "userTesta@gmail.com");
-
-		List<String> emails = existOptional(runner.query(command, handler));
-		Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
-
-		Assert.assertEquals(emails.size() - 1, emailsSet.size());
-
-	}
-
-	@Test
-	public void setFromList() throws CEUException, ParseException {
-
-		SetHandler<String> handlerSet = new SetHandler<String>("tags",
-				String.class);
+		SetHandler<String> handlerSet = BuilderSetHandler.build().byAnyRow()
+				.collect().byFieldName("tags", String.class);
 		Command command = new Command("SELECT tags FROM " + TABLE_NAME
 				+ " where key= ? ", "userTest3");
 
@@ -61,6 +35,71 @@ public class SetHandlerTest extends BaseTest {
 
 	}
 
+	@Test
+	public void byFirstRowCollectbyFieldName() throws CEUException,
+			ParseException {
+
+		SetHandler<String> handlerSet = BuilderSetHandler.build().byAnyRow()
+				.collect().byFieldName("tags", String.class);
+		Command command = new Command("SELECT tags FROM " + TABLE_NAME
+				+ " where key= ? ", "userTest3");
+
+		Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
+
+		Assert.assertEquals(3, emailsSet.size());
+
+		Assert.assertEquals(true, emailsSet.contains("Tag1-3"));
+		Assert.assertEquals(true, emailsSet.contains("Tag2-3"));
+		Assert.assertEquals(true, emailsSet.contains("Tag3-3"));
+
+		runner.exec(command);
+
+	}
+
+	@Test
+	public void usingFilter() throws CEUException, ParseException {
+
+		SetHandler<String> handlerSet = BuilderSetHandler.build()
+				.filter(r -> r.getInt("age") == 45)
+				.filter(r -> "userTestTime".equals(r.getString("key")))
+				.byAnyRow().collect().byFieldName("tags", String.class);
+
+		Command command = new Command("SELECT age,key,tags FROM " + TABLE_NAME
+				+ " ALLOW FILTERING");
+
+		Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
+
+		Assert.assertEquals(3, emailsSet.size());
+
+		Assert.assertEquals(true, emailsSet.contains("Player1"));
+		Assert.assertEquals(true, emailsSet.contains("Player2"));
+		Assert.assertEquals(true, emailsSet.contains("Player3"));
+
+		runner.exec(command);
+
+		command = new Command("SELECT email,tags FROM " + TABLE_NAME
+				+ " ALLOW FILTERING");
+
+		handlerSet = BuilderSetHandler
+				.build()
+				.filter(r -> r.getString("email").equals("userTesta@gmail.com"))
+				.byAnyRow().collect().byFieldName("tags", String.class);
+
+		command = new Command("SELECT key,email,tags FROM " + TABLE_NAME
+				+ " ALLOW FILTERING");
+
+		emailsSet = existOptional(runner.query(command, handlerSet));
+
+		Assert.assertEquals(3, emailsSet.size());
+
+		Assert.assertEquals(true, emailsSet.contains("testa1"));
+		Assert.assertEquals(true, emailsSet.contains("testa2"));
+		Assert.assertEquals(true, emailsSet.contains("testa3"));
+
+		runner.exec(command);
+
+	}
+
 	@After
 	public void afterMethod() throws CEUException {
 		Command command = new Command("DELETE FROM " + TABLE_NAME
@@ -68,32 +107,50 @@ public class SetHandlerTest extends BaseTest {
 		runner.exec(command);
 	}
 
-	@Test
-	public void setFromFunction() throws CEUException, ParseException {
-
-		Command command = new Command(
-				"INSERT INTO "
-						+ TABLE_NAME
-						+ " (key,email,age,tags,\"friendsByName\",cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
-				"userTestset", "userTesta@gmail.com", 45, "Pelé1", "Pelé2",
-				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
-		runner.exec(command);
-
-		SetHandler<String> handlerSet = new SetHandler<String>(
-				r -> Optional.of(r.getString("email")));
-
-		ListHandler<String> handler = new ListHandler<String>("email",
-				String.class);
-
-		command = new Command("SELECT email FROM " + TABLE_NAME
-				+ " where email= ? ALLOW FILTERING", "userTesta@gmail.com");
-
-		List<String> emailsList = existOptional(runner.query(command, handler));
-
-		Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
-
-		Assert.assertEquals(emailsList.size() - 1, emailsSet.size());
-
-	}
+	/*
+	 * @Test public void setFromRow() throws CEUException, ParseException {
+	 * 
+	 * Command command = new Command( "INSERT INTO " + TABLE_NAME +
+	 * " (key,email,age,tags,\"friendsByName\",cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})"
+	 * , "userTestset", "userTesta@gmail.com", 45, "Pelé1", "Pelé2", "Pelé3",
+	 * "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55); runner.exec(command);
+	 * 
+	 * ListHandler<String> handler = new ListHandler<String>("email",
+	 * String.class); SetHandler<String> handlerSet = new
+	 * SetHandler<String>("email", String.class); command = new
+	 * Command("SELECT email FROM " + TABLE_NAME +
+	 * " where email= ? ALLOW FILTERING", "userTesta@gmail.com");
+	 * 
+	 * List<String> emails = existOptional(runner.query(command, handler));
+	 * Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
+	 * 
+	 * Assert.assertEquals(emails.size() - 1, emailsSet.size());
+	 * 
+	 * }
+	 * 
+	 * @Test public void setFromFunction() throws CEUException, ParseException {
+	 * 
+	 * Command command = new Command( "INSERT INTO " + TABLE_NAME +
+	 * " (key,email,age,tags,\"friendsByName\",cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})"
+	 * , "userTestset", "userTesta@gmail.com", 45, "Pelé1", "Pelé2", "Pelé3",
+	 * "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55); runner.exec(command);
+	 * 
+	 * SetHandler<String> handlerSet = new SetHandler<String>( r ->
+	 * Optional.of(r.getString("email")));
+	 * 
+	 * ListHandler<String> handler = new ListHandler<String>("email",
+	 * String.class);
+	 * 
+	 * command = new Command("SELECT email FROM " + TABLE_NAME +
+	 * " where email= ? ALLOW FILTERING", "userTesta@gmail.com");
+	 * 
+	 * List<String> emailsList = existOptional(runner.query(command, handler));
+	 * 
+	 * Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
+	 * 
+	 * Assert.assertEquals(emailsList.size() - 1, emailsSet.size());
+	 * 
+	 * }
+	 */
 
 }

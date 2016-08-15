@@ -2,17 +2,13 @@ package com.taulukko.ceu.data;
 
 import java.util.Iterator;
 import java.util.List;
- 
+import java.util.stream.Stream;
 
 public interface ResultSet extends Iterator<Row> {
 
 	public abstract ColumnDefinitions getColumnDefinitions();
 
-	public abstract Row one();
-
 	public abstract List<Row> all();
-
-	public abstract Iterator<Row> iterator();
 
 	public abstract int getAvailableWithoutFetching();
 
@@ -24,8 +20,14 @@ public interface ResultSet extends Iterator<Row> {
 
 	public abstract boolean wasApplied();
 
-	public abstract boolean isEmpty();
-
 	public abstract boolean hasNext();
+
+	public default Stream<Row> stream() {
+		return this.all().stream();
+	}
+
+	public default boolean isEmpty() {
+		return this.all().size() == 0;
+	}
 
 }
