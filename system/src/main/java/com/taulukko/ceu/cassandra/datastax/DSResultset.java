@@ -1,6 +1,5 @@
 package com.taulukko.ceu.cassandra.datastax;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +26,6 @@ public class DSResultset implements ResultSet {
 		return new DSColumnDefinitions(coreResultSet.getColumnDefinitions());
 	}
 
-	 
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -38,8 +36,6 @@ public class DSResultset implements ResultSet {
 		return coreResultSet.all().stream().map(r -> (Row) new DSRow(r))
 				.collect(Collectors.toList());
 	}
-
-	 
 
 	/*
 	 * (non-Javadoc)
@@ -113,13 +109,11 @@ public class DSResultset implements ResultSet {
 	public boolean hasNext() {
 		return coreResultSet.isExhausted();
 	}
-
-	@SuppressWarnings("unchecked")
+ 
 	@Override
 	public Row next() {
 
-		return new DSRow(
-				((Iterator<com.datastax.driver.core.Row>) coreResultSet).next());
+		return new DSRow(coreResultSet.iterator().next());
 	}
 
 }
