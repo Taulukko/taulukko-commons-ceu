@@ -1,7 +1,11 @@
 package integration.com.taulukko.ceu.cassandra.datastax;
 
 import java.text.ParseException;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -9,6 +13,7 @@ import org.junit.Test;
 
 import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.Command;
+import com.taulukko.ceu.data.Row;
 import com.taulukko.ceu.handler.BuilderSetHandler;
 import com.taulukko.ceu.handler.SetHandler;
 
@@ -19,7 +24,7 @@ public class SetHandlerTest extends BaseTest {
 			ParseException {
 
 		SetHandler<String> handlerSet = BuilderSetHandler.build().byAnyRow()
-				.collect().byFieldName("tags", String.class);
+				.collect().byFieldSet("tags", String.class);
 		Command command = new Command("SELECT tags FROM " + TABLE_NAME
 				+ " where key= ? ", "userTest3");
 
@@ -40,9 +45,63 @@ public class SetHandlerTest extends BaseTest {
 			ParseException {
 
 		SetHandler<String> handlerSet = BuilderSetHandler.build().byAnyRow()
-				.collect().byFieldName("tags", String.class);
+				.collect().byFieldSet("tags", String.class);
 		Command command = new Command("SELECT tags FROM " + TABLE_NAME
 				+ " where key= ? ", "userTest3");
+
+		Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
+
+		Assert.assertEquals(3, emailsSet.size());
+
+		Assert.assertEquals(true, emailsSet.contains("Tag1-3"));
+		Assert.assertEquals(true, emailsSet.contains("Tag2-3"));
+		Assert.assertEquals(true, emailsSet.contains("Tag3-3"));
+
+		runner.exec(command);
+
+	}
+
+	@Test
+	public void byRowFunction() throws CEUException, ParseException {
+
+		SetHandler<String> handlerSet = BuilderSetHandler
+				.build()
+				.byAnyRow()
+				.collect()
+				.byFunction(
+						row -> Optional.of(new HashSet<String>(row.get()
+								.getList("tags", String.class))));
+
+		Command command = new Command("SELECT tags FROM " + TABLE_NAME
+				+ " where key= ? ", "userTest3");
+
+		Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
+
+		Assert.assertEquals(3, emailsSet.size());
+
+		Assert.assertEquals(true, emailsSet.contains("Tag1-3"));
+		Assert.assertEquals(true, emailsSet.contains("Tag2-3"));
+		Assert.assertEquals(true, emailsSet.contains("Tag3-3"));
+
+		runner.exec(command);
+
+	}
+
+	@Test
+	public void byRowsFunction() throws CEUException, ParseException {
+
+		Function<Stream<Row>, Optional<Set<String>>> converter = stream -> Optional
+				.of(new HashSet<String>(
+						stream.filter(
+								row -> row.getString("key").equals("userTest3"))
+								.findFirst().get()
+								.getList("tags", String.class)));
+
+		SetHandler<String> handlerSet = BuilderSetHandler.build().byAllRows()
+				.collect().byFunction(converter);
+
+		Command command = new Command("SELECT key,tags FROM " + TABLE_NAME
+				+ " ALLOW FILTERING ");
 
 		Set<String> emailsSet = existOptional(runner.query(command, handlerSet));
 
@@ -62,7 +121,7 @@ public class SetHandlerTest extends BaseTest {
 		SetHandler<String> handlerSet = BuilderSetHandler.build()
 				.filter(r -> r.getInt("age") == 45)
 				.filter(r -> "userTestTime".equals(r.getString("key")))
-				.byAnyRow().collect().byFieldName("tags", String.class);
+				.byAnyRow().collect().byFieldSet("tags", String.class);
 
 		Command command = new Command("SELECT age,key,tags FROM " + TABLE_NAME
 				+ " ALLOW FILTERING");
@@ -83,7 +142,7 @@ public class SetHandlerTest extends BaseTest {
 		handlerSet = BuilderSetHandler
 				.build()
 				.filter(r -> r.getString("email").equals("userTesta@gmail.com"))
-				.byAnyRow().collect().byFieldName("tags", String.class);
+				.byAnyRow().collect().byFieldSet("tags", String.class);
 
 		command = new Command("SELECT key,email,tags FROM " + TABLE_NAME
 				+ " ALLOW FILTERING");
