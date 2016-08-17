@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.Command;
 import com.taulukko.ceu.data.Row;
-import com.taulukko.ceu.handler.BuilderSetHandler;
+import com.taulukko.ceu.handler.SetHandlerBuilder;
 import com.taulukko.ceu.handler.SetHandler;
 
 public class SetHandlerTest extends BaseTest {
@@ -23,7 +23,7 @@ public class SetHandlerTest extends BaseTest {
 	public void byAnyRowCollectbyFieldName() throws CEUException,
 			ParseException {
 
-		SetHandler<String> handlerSet = BuilderSetHandler.build().byAnyRow()
+		SetHandler<String> handlerSet = SetHandlerBuilder.build().byAnyRow()
 				.collect().byFieldSet("tags", String.class);
 		Command command = new Command("SELECT tags FROM " + TABLE_NAME
 				+ " where key= ? ", "userTest3");
@@ -44,7 +44,7 @@ public class SetHandlerTest extends BaseTest {
 	public void byFirstRowCollectbyFieldName() throws CEUException,
 			ParseException {
 
-		SetHandler<String> handlerSet = BuilderSetHandler.build().byAnyRow()
+		SetHandler<String> handlerSet = SetHandlerBuilder.build().byAnyRow()
 				.collect().byFieldSet("tags", String.class);
 		Command command = new Command("SELECT tags FROM " + TABLE_NAME
 				+ " where key= ? ", "userTest3");
@@ -64,7 +64,7 @@ public class SetHandlerTest extends BaseTest {
 	@Test
 	public void byRowFunction() throws CEUException, ParseException {
 
-		SetHandler<String> handlerSet = BuilderSetHandler
+		SetHandler<String> handlerSet = SetHandlerBuilder
 				.build()
 				.byAnyRow()
 				.collect()
@@ -97,7 +97,7 @@ public class SetHandlerTest extends BaseTest {
 								.findFirst().get()
 								.getList("tags", String.class)));
 
-		SetHandler<String> handlerSet = BuilderSetHandler.build().byAllRows()
+		SetHandler<String> handlerSet = SetHandlerBuilder.build().byAllRows()
 				.collect().byFunction(converter);
 
 		Command command = new Command("SELECT key,tags FROM " + TABLE_NAME
@@ -118,7 +118,7 @@ public class SetHandlerTest extends BaseTest {
 	@Test
 	public void usingFilter() throws CEUException, ParseException {
 
-		SetHandler<String> handlerSet = BuilderSetHandler.build()
+		SetHandler<String> handlerSet = SetHandlerBuilder.build()
 				.filter(r -> r.getInt("age") == 45)
 				.filter(r -> "userTestTime".equals(r.getString("key")))
 				.byAnyRow().collect().byFieldSet("tags", String.class);
@@ -139,7 +139,7 @@ public class SetHandlerTest extends BaseTest {
 		command = new Command("SELECT email,tags FROM " + TABLE_NAME
 				+ " ALLOW FILTERING");
 
-		handlerSet = BuilderSetHandler
+		handlerSet = SetHandlerBuilder
 				.build()
 				.filter(r -> r.getString("email").equals("userTesta@gmail.com"))
 				.byAnyRow().collect().byFieldSet("tags", String.class);

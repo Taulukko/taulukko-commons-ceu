@@ -11,7 +11,6 @@ import com.taulukko.cassandra.AccountTestBean;
 import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.Command;
 import com.taulukko.ceu.handler.BeanListHandler;
-import com.taulukko.ceu.handler.ListHandler;
 
 public class ListBeanHandlerTest extends BaseTest {
 
@@ -47,18 +46,4 @@ public class ListBeanHandlerTest extends BaseTest {
 		Assert.assertFalse(ret.isPresent());
 	}
 
-	@Test
-	public void listHandlerTest() throws CEUException, ParseException {
-
-		ListHandler<String> handler = new ListHandler<String>("tags",
-				String.class);
-		Command command = new Command("SELECT tags FROM \"" + TABLE_NAME
-				+ "\" WHERE key = ?", "userTest3");
-
-		List<String> tags = existOptional(runner.query(command, handler));
-
-		Assert.assertEquals("Tag1-3", tags.get(0));
-		Assert.assertEquals("Tag2-3", tags.get(1));
-		Assert.assertEquals("Tag3-3", tags.get(2));
-	}
 }

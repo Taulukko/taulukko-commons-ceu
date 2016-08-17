@@ -10,13 +10,13 @@ import java.util.stream.Stream;
 import com.taulukko.ceu.data.ResultSet;
 import com.taulukko.ceu.data.Row;
 
-public class BuilderSetHandler {
+public class SetHandlerBuilder {
 
-	private BuilderSetHandler() {
+	private SetHandlerBuilder() {
 	}
 
 	public static FilterSet build() {
-		return new BuilderSetHandler().new FilterSet();
+		return new SetHandlerBuilder().new FilterSet();
 	}
 
 	public class FilterSet {

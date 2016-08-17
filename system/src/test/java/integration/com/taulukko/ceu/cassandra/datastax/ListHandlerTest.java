@@ -12,14 +12,15 @@ import org.junit.Test;
 import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.Command;
 import com.taulukko.ceu.handler.ListHandler;
+import com.taulukko.ceu.handler.ListHandlerBuilder;
 
 public class ListHandlerTest extends BaseTest {
 
 	@Test
 	public void listfield() throws CEUException, ParseException {
 
-		ListHandler<String> handler = new ListHandler<String>("email",
-				String.class);
+		ListHandler<String> handler = ListHandlerBuilder.build().byAllRows()
+				.collect().byField("email", String.class);
 		Command command = new Command("SELECT email FROM \"" + TABLE_NAME
 				+ "\" allow filtering ");
 
@@ -31,17 +32,17 @@ public class ListHandlerTest extends BaseTest {
 			Assert.assertTrue(emails.get(0).endsWith("@gmail.com"));
 			setEmails.add(email);
 		});
-		
+
 		Assert.assertEquals(emails.size(), setEmails.size());
-		 
 
 	}
 
 	@Test
 	public void listFromManyFields() throws CEUException, ParseException {
 
-		ListHandler<String> handler = new ListHandler<String>("tags",
-				String.class);
+		ListHandler<String> handler = ListHandlerBuilder.build().byAnyRow()
+				.collect().byFieldList("tags", String.class);
+
 		Command command = new Command("SELECT tags FROM \"" + TABLE_NAME
 				+ "\" WHERE key = ?", "userTest3");
 
@@ -51,4 +52,6 @@ public class ListHandlerTest extends BaseTest {
 		Assert.assertEquals("Tag2-3", tags.get(1));
 		Assert.assertEquals("Tag3-3", tags.get(2));
 	}
+	
+	 
 }
