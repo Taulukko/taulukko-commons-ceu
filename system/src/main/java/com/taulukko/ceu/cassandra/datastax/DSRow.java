@@ -23,7 +23,9 @@ public class DSRow implements Row {
 		this.coreRow = coreRow;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getColumnDefinitions()
 	 */
 	@Override
@@ -31,7 +33,9 @@ public class DSRow implements Row {
 		return new DSColumnDefinitions(coreRow.getColumnDefinitions());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#isNull(java.lang.String)
 	 */
 	@Override
@@ -39,7 +43,9 @@ public class DSRow implements Row {
 		return coreRow.isNull(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#isNull(int)
 	 */
 	@Override
@@ -47,7 +53,9 @@ public class DSRow implements Row {
 		return coreRow.isNull(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getToken(int)
 	 */
 	@Override
@@ -55,7 +63,9 @@ public class DSRow implements Row {
 		return new DSToken(coreRow.getToken(i));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getBool(java.lang.String)
 	 */
 	@Override
@@ -63,7 +73,9 @@ public class DSRow implements Row {
 		return coreRow.getBool(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getBool(int)
 	 */
 	@Override
@@ -71,7 +83,9 @@ public class DSRow implements Row {
 		return coreRow.getBool(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getToken(java.lang.String)
 	 */
 	@Override
@@ -79,7 +93,9 @@ public class DSRow implements Row {
 		return new DSToken(coreRow.getToken(name));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getByte(java.lang.String)
 	 */
 	@Override
@@ -87,7 +103,9 @@ public class DSRow implements Row {
 		return coreRow.getByte(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getByte(int)
 	 */
 	@Override
@@ -95,7 +113,9 @@ public class DSRow implements Row {
 		return coreRow.getByte(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getPartitionKeyToken()
 	 */
 	@Override
@@ -103,7 +123,9 @@ public class DSRow implements Row {
 		return new DSToken(coreRow.getPartitionKeyToken());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getShort(java.lang.String)
 	 */
 	@Override
@@ -111,7 +133,9 @@ public class DSRow implements Row {
 		return coreRow.getShort(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getShort(int)
 	 */
 	@Override
@@ -119,7 +143,9 @@ public class DSRow implements Row {
 		return coreRow.getShort(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getInt(java.lang.String)
 	 */
 	@Override
@@ -127,7 +153,9 @@ public class DSRow implements Row {
 		return coreRow.getInt(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getInt(int)
 	 */
 	@Override
@@ -135,7 +163,9 @@ public class DSRow implements Row {
 		return coreRow.getInt(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getLong(java.lang.String)
 	 */
 	@Override
@@ -143,7 +173,9 @@ public class DSRow implements Row {
 		return coreRow.getLong(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getLong(int)
 	 */
 	@Override
@@ -151,15 +183,20 @@ public class DSRow implements Row {
 		return coreRow.getLong(i);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getTimestamp(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.taulukko.ceu.cassandra.datastax.Row#getTimestamp(java.lang.String)
 	 */
 	@Override
 	public Date getTimestamp(String name) {
 		return coreRow.getTimestamp(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getTimestamp(int)
 	 */
 	@Override
@@ -167,7 +204,9 @@ public class DSRow implements Row {
 		return coreRow.getTimestamp(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getDate(java.lang.String)
 	 */
 	@Override
@@ -175,7 +214,9 @@ public class DSRow implements Row {
 		return new DSLocalDate(coreRow.getDate(name));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getTime(java.lang.String)
 	 */
 	@Override
@@ -183,7 +224,9 @@ public class DSRow implements Row {
 		return coreRow.getTime(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getTime(int)
 	 */
 	@Override
@@ -191,7 +234,9 @@ public class DSRow implements Row {
 		return coreRow.getTime(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getFloat(java.lang.String)
 	 */
 	@Override
@@ -199,7 +244,9 @@ public class DSRow implements Row {
 		return coreRow.getFloat(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getFloat(int)
 	 */
 	@Override
@@ -207,7 +254,9 @@ public class DSRow implements Row {
 		return coreRow.getFloat(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getDouble(java.lang.String)
 	 */
 	@Override
@@ -215,7 +264,9 @@ public class DSRow implements Row {
 		return coreRow.getDouble(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getDouble(int)
 	 */
 	@Override
@@ -223,15 +274,20 @@ public class DSRow implements Row {
 		return coreRow.getDouble(i);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getBytesUnsafe(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.taulukko.ceu.cassandra.datastax.Row#getBytesUnsafe(java.lang.String)
 	 */
 	@Override
 	public ByteBuffer getBytesUnsafe(String name) {
 		return coreRow.getBytesUnsafe(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getBytesUnsafe(int)
 	 */
 	@Override
@@ -239,7 +295,9 @@ public class DSRow implements Row {
 		return coreRow.getBytesUnsafe(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getBytes(int)
 	 */
 	@Override
@@ -247,7 +305,9 @@ public class DSRow implements Row {
 		return coreRow.getBytes(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getBytes(java.lang.String)
 	 */
 	@Override
@@ -255,7 +315,9 @@ public class DSRow implements Row {
 		return coreRow.getBytes(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getString(int)
 	 */
 	@Override
@@ -263,7 +325,9 @@ public class DSRow implements Row {
 		return coreRow.getString(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getString(java.lang.String)
 	 */
 	@Override
@@ -271,7 +335,9 @@ public class DSRow implements Row {
 		return coreRow.getString(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getVarint(int)
 	 */
 	@Override
@@ -279,7 +345,9 @@ public class DSRow implements Row {
 		return coreRow.getVarint(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getVarint(java.lang.String)
 	 */
 	@Override
@@ -287,7 +355,9 @@ public class DSRow implements Row {
 		return coreRow.getVarint(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getDecimal(java.lang.String)
 	 */
 	@Override
@@ -295,7 +365,9 @@ public class DSRow implements Row {
 		return coreRow.getDecimal(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getDecimal(int)
 	 */
 	@Override
@@ -303,7 +375,9 @@ public class DSRow implements Row {
 		return coreRow.getDecimal(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getUUID(java.lang.String)
 	 */
 	@Override
@@ -311,7 +385,9 @@ public class DSRow implements Row {
 		return coreRow.getUUID(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getUUID(int)
 	 */
 	@Override
@@ -319,7 +395,9 @@ public class DSRow implements Row {
 		return coreRow.getUUID(i);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getInet(java.lang.String)
 	 */
 	@Override
@@ -327,7 +405,9 @@ public class DSRow implements Row {
 		return coreRow.getInet(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getInet(int)
 	 */
 	@Override
@@ -335,47 +415,64 @@ public class DSRow implements Row {
 		return coreRow.getInet(i);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getList(java.lang.String, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getList(java.lang.String,
+	 * java.lang.Class)
 	 */
 	@Override
 	public <T> List<T> getList(String name, Class<T> elementsClass) {
 		return coreRow.getList(name, elementsClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getList(int, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getList(int,
+	 * java.lang.Class)
 	 */
 	@Override
 	public <T> List<T> getList(int i, Class<T> elementsClass) {
 		return coreRow.getList(i, elementsClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getList(java.lang.String, com.google.common.reflect.TypeToken)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getList(java.lang.String,
+	 * com.google.common.reflect.TypeToken)
 	 */
 	@Override
 	public <T> List<T> getList(String name, TypeToken<T> elementsType) {
 		return coreRow.getList(name, elementsType);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getList(int, com.google.common.reflect.TypeToken)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getList(int,
+	 * com.google.common.reflect.TypeToken)
 	 */
 	@Override
 	public <T> List<T> getList(int i, TypeToken<T> elementsType) {
 		return coreRow.getList(i, elementsType);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getSet(java.lang.String, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getSet(java.lang.String,
+	 * java.lang.Class)
 	 */
 	@Override
 	public <T> Set<T> getSet(String name, Class<T> elementsClass) {
 		return coreRow.getSet(name, elementsClass);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getSet(int, java.lang.Class)
 	 */
 	@Override
@@ -383,24 +480,33 @@ public class DSRow implements Row {
 		return coreRow.getSet(i, elementsClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getSet(java.lang.String, com.google.common.reflect.TypeToken)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getSet(java.lang.String,
+	 * com.google.common.reflect.TypeToken)
 	 */
 	@Override
 	public <T> Set<T> getSet(String name, TypeToken<T> elementsType) {
 		return coreRow.getSet(name, elementsType);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getSet(int, com.google.common.reflect.TypeToken)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getSet(int,
+	 * com.google.common.reflect.TypeToken)
 	 */
 	@Override
 	public <T> Set<T> getSet(int i, TypeToken<T> elementsType) {
 		return coreRow.getSet(i, elementsType);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getMap(java.lang.String, java.lang.Class, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getMap(java.lang.String,
+	 * java.lang.Class, java.lang.Class)
 	 */
 	@Override
 	public <K, V> Map<K, V> getMap(String name, Class<K> keysClass,
@@ -408,8 +514,11 @@ public class DSRow implements Row {
 		return coreRow.getMap(name, keysClass, valuesClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getMap(int, java.lang.Class, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getMap(int, java.lang.Class,
+	 * java.lang.Class)
 	 */
 	@Override
 	public <K, V> Map<K, V> getMap(int i, Class<K> keysClass,
@@ -417,8 +526,11 @@ public class DSRow implements Row {
 		return coreRow.getMap(i, keysClass, valuesClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getMap(java.lang.String, com.google.common.reflect.TypeToken, com.google.common.reflect.TypeToken)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getMap(java.lang.String,
+	 * com.google.common.reflect.TypeToken, com.google.common.reflect.TypeToken)
 	 */
 	@Override
 	public <K, V> Map<K, V> getMap(String name, TypeToken<K> keysType,
@@ -426,8 +538,11 @@ public class DSRow implements Row {
 		return coreRow.getMap(name, keysType, valuesType);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#getMap(int, com.google.common.reflect.TypeToken, com.google.common.reflect.TypeToken)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#getMap(int,
+	 * com.google.common.reflect.TypeToken, com.google.common.reflect.TypeToken)
 	 */
 	@Override
 	public <K, V> Map<K, V> getMap(int i, TypeToken<K> keysType,
@@ -435,7 +550,9 @@ public class DSRow implements Row {
 		return coreRow.getMap(i, keysType, valuesType);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getObject(java.lang.String)
 	 */
 	@Override
@@ -443,7 +560,9 @@ public class DSRow implements Row {
 		return coreRow.getObject(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#getObject(int)
 	 */
 	@Override
@@ -451,15 +570,20 @@ public class DSRow implements Row {
 		return coreRow.getObject(i);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#get(java.lang.String, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#get(java.lang.String,
+	 * java.lang.Class)
 	 */
 	@Override
 	public <T> T get(String name, Class<T> targetClass) {
 		return coreRow.get(name, targetClass);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#get(int, java.lang.Class)
 	 */
 	@Override
@@ -467,29 +591,46 @@ public class DSRow implements Row {
 		return coreRow.get(i, targetClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#get(java.lang.String, com.google.common.reflect.TypeToken)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#get(java.lang.String,
+	 * com.google.common.reflect.TypeToken)
 	 */
 	@Override
 	public <T> T get(String name, TypeToken<T> targetType) {
 		return coreRow.get(name, targetType);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.taulukko.ceu.cassandra.datastax.Row#get(int, com.google.common.reflect.TypeToken)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.taulukko.ceu.cassandra.datastax.Row#get(int,
+	 * com.google.common.reflect.TypeToken)
 	 */
 	@Override
 	public <T> T get(int i, TypeToken<T> targetType) {
 		return coreRow.get(i, targetType);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.taulukko.ceu.cassandra.datastax.Row#isEmpty()
 	 */
 	@Override
 	public boolean isEmpty() {
 
 		ColumnDefinitions columnDefinitions = getColumnDefinitions();
-		return columnDefinitions.size() <= 1;
+		boolean noColumns = columnDefinitions.size() == 0;
+		if (noColumns) {
+			return true;
+		}
+		boolean onlyKey = (columnDefinitions.size() == 1 && columnDefinitions
+				.contains("key"));
+		if (onlyKey) {
+			return true;
+		}
+		return false;
 	}
 }

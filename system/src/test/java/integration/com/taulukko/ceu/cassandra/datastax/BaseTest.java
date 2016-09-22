@@ -42,7 +42,7 @@ public class BaseTest {
 	public static void beforeClass() throws CEUException {
 
 		TestUtil.start();
-		
+
 		CEUConfig.isAutoWrapItemName = true;
 
 		Factory factory = new DSDriver().getFactoryByContactPoint("localhost");
@@ -67,6 +67,12 @@ public class BaseTest {
 						+ " \"friendsByName\" map<text,int>, cmps set<int>)");
 		runner.exec(command);
 
+		//secondary index need rebuild after creation
+		// nodetool rebuild_index my_keysapce my_column_family my_column_family.my_idx
+		command = new Command(
+				"CREATE INDEX ON \"" + TABLE_NAME + "\" (email) ");
+		runner.exec(command);
+		
 		command = new Command(
 				"INSERT INTO \""
 						+ TABLE_NAME
@@ -79,8 +85,9 @@ public class BaseTest {
 				"INSERT INTO \""
 						+ TABLE_NAME
 						+ "\" (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?}) USING TTL 10",
-				"userTestTime", "userTestb@gmail.com", 45, "Player1", "Player2",
-				"Player3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
+				"userTestTime", "userTestb@gmail.com", 45, "Player1",
+				"Player2", "Player3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33,
+				44, 55);
 		runner.exec(command);
 
 		command = new Command(
@@ -90,6 +97,24 @@ public class BaseTest {
 				"userTestTime2", "userTestc@gmail.com", 45, "Pelé1", "Pelé2",
 				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
 		runner.exec(command);
+
+		command = new Command(
+				"INSERT INTO "
+						+ TABLE_NAME
+						+ " (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
+				"mapuserTest1", "mapTest@gmail.com", 45, "Pelé1", "Pelé2",
+				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
+		runner.exec(command);
+
+		command = new Command(
+				"INSERT INTO "
+						+ TABLE_NAME
+						+ " (key,email,age,tags,friendsByName,cmps) VALUES (?,?,?,[?,?,?],{?:?,?:? ,?:? },{?,?,?})",
+				"mapuserTest2", "mapTest@gmail.com", 46, "Pelé1", "Pelé2",
+				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
+		runner.exec(command);
+
+		
 
 		for (int index = 0; index < 100; index++) {
 			List<String> tags = Arrays.asList("Tag1-" + index, "Tag2-" + index,
@@ -136,10 +161,8 @@ public class BaseTest {
 				"userTest", "userTest@gmail.com", 45, "Pelé1", "Pelé2",
 				"Pelé3", "Eduardo", 1, "Rafael", 2, "Gabi", 3, 33, 44, 55);
 		runner.exec(command);
-	}
 
-	 
- 
+	}
 
 	public <T> T existOptional(Optional<T> o) {
 		Assert.assertTrue(o.isPresent());

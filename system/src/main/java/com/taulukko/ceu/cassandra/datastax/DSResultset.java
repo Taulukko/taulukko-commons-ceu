@@ -11,6 +11,7 @@ import com.taulukko.ceu.data.Row;
 public class DSResultset implements ResultSet {
 
 	private com.datastax.driver.core.ResultSet coreResultSet = null;
+	private List<Row> all = null;
 
 	public DSResultset(com.datastax.driver.core.ResultSet resultSet) {
 		this.coreResultSet = resultSet;
@@ -33,8 +34,11 @@ public class DSResultset implements ResultSet {
 	 */
 	@Override
 	public List<Row> all() {
-		return coreResultSet.all().stream().map(r -> (Row) new DSRow(r))
-				.collect(Collectors.toList());
+		if (all == null) {
+			all = coreResultSet.all().stream().map(r -> (Row) new DSRow(r))
+					.collect(Collectors.toList());
+		}
+		return all;
 	}
 
 	/*
@@ -109,7 +113,7 @@ public class DSResultset implements ResultSet {
 	public boolean hasNext() {
 		return coreResultSet.isExhausted();
 	}
- 
+
 	@Override
 	public Row next() {
 
