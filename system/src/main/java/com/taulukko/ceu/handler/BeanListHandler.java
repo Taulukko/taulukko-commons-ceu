@@ -2,7 +2,6 @@ package com.taulukko.ceu.handler;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -25,12 +24,11 @@ public class BeanListHandler<T> implements Handler<List<T>> {
 	}
 
 	private static <U> Optional<U> converterFillBean(Row row, Class<U> clazz,
-			Function<Exception, Boolean> onError, final List<Exception> errors) {
+			Function<Exception, Boolean> onSoftException) {
 		try {
-			return HandlerUtils.fillBean(row, clazz, onError);
-		} catch (RuntimeException e) {
-			errors.add(e);
-			return Optional.empty();
+			return HandlerUtils.fillBean(row, clazz, onSoftException);
+		} catch (CEUException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -40,17 +38,13 @@ public class BeanListHandler<T> implements Handler<List<T>> {
 			return Optional.empty();
 		}
 
-		final List<Exception> errors = new CopyOnWriteArrayList<Exception>();
-
 		try {
 
 			Optional<List<T>> ret = Optional.of(result.all().stream()
-					.map(r -> converterFillBean(r, clazz, onError, errors))
+					.map(r -> converterFillBean(r, clazz, onError))
 					.filter(o -> o.isPresent()).map(o -> o.get())
 					.collect(Collectors.toList()));
-			if (!errors.isEmpty()) {
-				throw new CEUException(errors.get(0));
-			}
+
 			return ret;
 		} catch (RuntimeException e) {
 			throw new CEUException(e);

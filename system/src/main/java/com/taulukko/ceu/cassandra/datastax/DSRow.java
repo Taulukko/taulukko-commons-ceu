@@ -11,13 +11,15 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.google.common.reflect.TypeToken;
+import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.data.ColumnDefinitions;
 import com.taulukko.ceu.data.LocalDate;
 import com.taulukko.ceu.data.Row;
 import com.taulukko.ceu.data.Token;
+import com.taulukko.ceu.data.TupleValue;
 
 public class DSRow implements Row {
-	private com.datastax.driver.core.Row coreRow = null;
+	private com.datastax.driver.core.Row coreRow = null; 
 
 	public DSRow(com.datastax.driver.core.Row coreRow) {
 		this.coreRow = coreRow;
@@ -632,5 +634,23 @@ public class DSRow implements Row {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public LocalDate getDate(int i) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue getTupleValue(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue getTupleValue(int i) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

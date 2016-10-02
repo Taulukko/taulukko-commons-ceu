@@ -18,6 +18,10 @@ public class ListHandler<T> implements Handler<List<T>> {
 
 	@Override
 	public Optional<List<T>> convert(ResultSet result) throws CEUException {
-		return identitys.apply(result);
+		try {
+			return identitys.apply(result);
+		} catch (RuntimeException re) {
+			throw new CEUException(re);
+		}
 	}
 }

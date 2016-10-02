@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.data.ResultSet;
 import com.taulukko.ceu.data.Row;
 
@@ -94,17 +95,25 @@ public class SetHandlerBuilder {
 					.stream()));
 		}
 
-		public <T> SetHandler<T> byField(String fieldName, Class<T> clazz) {
+		public <T> SetHandler<T> byField(String fieldName, Class<T> clazz)
+				throws CEUException {
 			return new SetHandler<T>(setByFieldName(fieldName, clazz));
 		}
 
 		private <T> Function<ResultSet, Optional<Set<T>>> setByFieldName(
-				final String fieldName, final Class<T> targetClass) {
+				final String fieldName, final Class<T> targetClass)
+				throws CEUException {
 
 			return resultset -> (resultset.isEmpty()) ? Optional.empty()
-					: Optional.of(resultset.stream()
-							.map(row -> row.get(fieldName, targetClass))
-							.collect(Collectors.toSet()));
+					: Optional
+							.of(resultset
+									.stream()
+									.map(row -> HandlerUtils
+											.getSilent(row,
+													fieldName, targetClass))
+									.filter(v -> v != null)
+									.collect(Collectors.toSet()));
+
 		}
 	}
 
@@ -122,11 +131,13 @@ public class SetHandlerBuilder {
 					.apply(resultset.stream()));
 		}
 
-		public <T> SetHandler<T> byFieldSet(String fieldName, Class<T> clazz) {
+		public <T> SetHandler<T> byFieldSet(String fieldName, Class<T> clazz)
+				throws CEUException {
 			return new SetHandler<T>(setByFieldCollection(fieldName, clazz));
 		}
 
-		public <T> SetHandler<T> byFieldList(String fieldName, Class<T> clazz) {
+		public <T> SetHandler<T> byFieldList(String fieldName, Class<T> clazz)
+				throws CEUException {
 			return new SetHandler<T>(setByFieldCollection(fieldName, clazz));
 		}
 
@@ -134,16 +145,20 @@ public class SetHandlerBuilder {
 				String fieldName, Class<T> clazz) {
 
 			final Function<Stream<Row>, Optional<Row>> filter = filterbyRow;
-			return resultset -> {
+			Function<ResultSet, Optional<Set<T>>> ret = resultset -> {
 				Optional<Row> row = filter.apply(resultset.stream());
 				if (!row.isPresent()) {
 					return Optional.empty();
 				}
 
-				return Optional.of(row.get().getList(fieldName, clazz).stream()
-						.distinct().collect(Collectors.toSet()));
-			};
-		}
+				return Optional.of(HandlerUtils
+						.getListSilent(row.get(), fieldName,
+								clazz).stream().distinct()
+						.collect(Collectors.toSet()));
 
+			};
+			return ret;
+
+		}
 	}
 }

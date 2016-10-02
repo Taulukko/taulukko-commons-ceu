@@ -1,6 +1,8 @@
 package com.taulukko.ceu.handler;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.data.ResultSet;
@@ -22,8 +24,21 @@ public class SingleObjectHandler<T> implements Handler<T> {
 			return Optional.empty();
 		}
 
-		return result.all().stream().map(r -> r.get(columnName, clazz))
-				.findFirst();
+		final List<CEUException> exceptions = new CopyOnWriteArrayList<>();
+
+		Optional<T> ret = result.all().stream().map(r -> {
+			try {
+				return r.get(columnName, clazz);
+			} catch (CEUException e) {
+				exceptions.add(e);
+				return null;
+			}
+		}).filter(v -> v != null).findFirst();
+
+		if (exceptions.isEmpty()) {
+			return ret;
+		}
+		throw exceptions.get(0);
 	}
 
 }

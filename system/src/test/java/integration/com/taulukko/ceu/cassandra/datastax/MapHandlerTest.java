@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.Command;
 import com.taulukko.ceu.data.Row;
+import com.taulukko.ceu.handler.HandlerUtils;
 import com.taulukko.ceu.handler.MapHandler;
 import com.taulukko.ceu.handler.MapHandlerBuilder;
 
@@ -42,8 +43,8 @@ public class MapHandlerTest extends BaseTest {
 				.byAnyRow()
 				.collect()
 				.<String, Integer> byFunction(
-						row -> Optional.of(row.get().getMap(0, String.class,
-								Integer.class)));
+						row -> Optional.of(HandlerUtils.getMapSilent(row.get(),
+								0, String.class, Integer.class)));
 
 		Command command = new Command("SELECT friendsByName FROM " + TABLE_NAME
 				+ " WHERE key = ? ALLOW FILTERING", "userTest");
@@ -59,7 +60,8 @@ public class MapHandlerTest extends BaseTest {
 
 	private static Optional<Map<String, Integer>> getTest(Optional<Row> orow) {
 		Row row = orow.get();
-		Map<String, Integer> ret = row.getMap(0, String.class, Integer.class);
+		Map<String, Integer> ret = HandlerUtils.getMapSilent(row, 0,
+				String.class, Integer.class);
 		return Optional.of(ret);
 	}
 

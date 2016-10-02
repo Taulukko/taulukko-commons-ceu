@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.datastax.driver.core.ProtocolVersion;
 import com.datastax.driver.core.exceptions.DriverInternalError;
+import com.taulukko.ceu.CEUException;
 
 public interface DataType {
 
@@ -13,15 +14,15 @@ public interface DataType {
 
 	public abstract String toString();
 
-	public abstract Name getName();
+	public abstract Name getName() throws CEUException;
 
-	public abstract boolean isFrozen();
+	public abstract boolean isFrozen() throws CEUException;
 
-	public abstract boolean isCollection();
+	public abstract boolean isCollection() throws CEUException;
 
-	public abstract List<DataType> getTypeArguments();
+	public abstract List<DataType> getTypeArguments() throws CEUException;
 
-	public abstract String asFunctionParameterString();
+	public abstract String asFunctionParameterString() throws CEUException;
 	
 	  /**
      * The CQL type name.

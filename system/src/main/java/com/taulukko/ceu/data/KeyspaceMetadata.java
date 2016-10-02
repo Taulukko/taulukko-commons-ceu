@@ -9,50 +9,48 @@ import com.datastax.driver.core.FunctionMetadata;
 import com.datastax.driver.core.MaterializedViewMetadata;
 import com.datastax.driver.core.TableMetadata;
 import com.datastax.driver.core.UserType;
+import com.taulukko.ceu.CEUException;
 
 public interface KeyspaceMetadata {
 
-	public String getName();
+	public String getName() throws CEUException;
 
-	public boolean isDurableWrites();
+	public boolean isDurableWrites() throws CEUException;
 
-	public Map<String, String> getReplication();
+	public Map<String, String> getReplication() throws CEUException;
 
-	public TableMetadata getTable(String name);
+	public TableMetadata getTable(String name) throws CEUException;
 
-	public Collection<TableMetadata> getTables();
+	public Collection<TableMetadata> getTables() throws CEUException;
 
-	public MaterializedViewMetadata getMaterializedView(String name);
+	public MaterializedViewMetadata getMaterializedView(String name)
+			throws CEUException;
 
-	public Collection<MaterializedViewMetadata> getMaterializedViews();
+	public Collection<MaterializedViewMetadata> getMaterializedViews()
+			throws CEUException;
 
-	public UserType getUserType(String name);
+	public UserType getUserType(String name) throws CEUException;
 
-	public Collection<UserType> getUserTypes();
+	public Collection<UserType> getUserTypes() throws CEUException;
 
 	public FunctionMetadata getFunction(String name,
-			Collection<DataType> argumentTypes);
+			Collection<DataType> argumentTypes) throws CEUException;
 
-	public FunctionMetadata getFunction(String name, DataType... argumentTypes);
+	public FunctionMetadata getFunction(String name, DataType... argumentTypes)
+			throws CEUException;
 
-	public Collection<FunctionMetadata> getFunctions();
-
-	public AggregateMetadata getAggregate(String name,
-			Collection<DataType> argumentTypes);
+	public Collection<FunctionMetadata> getFunctions() throws CEUException;
 
 	public AggregateMetadata getAggregate(String name,
-			DataType... argumentTypes);
+			Collection<DataType> argumentTypes) throws CEUException;
 
-	public Collection<AggregateMetadata> getAggregates();
+	public AggregateMetadata getAggregate(String name,
+			DataType... argumentTypes) throws CEUException;
 
-	public String exportAsString();
+	public Collection<AggregateMetadata> getAggregates() throws CEUException;
 
-	public String asCQLQuery();
+	public String exportAsString() throws CEUException;
 
-	public String toString();
-
-	public boolean equals(Object o);
-
-	public int hashCode();
+	public String asCQLQuery() throws CEUException;
 
 }

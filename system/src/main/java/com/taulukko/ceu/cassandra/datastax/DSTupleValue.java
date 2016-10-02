@@ -11,12 +11,15 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.google.common.reflect.TypeToken;
+import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.data.LocalDate;
 import com.taulukko.ceu.data.TupleType;
 import com.taulukko.ceu.data.TupleValue;
 import com.taulukko.ceu.data.UDTValue;
-
+ 
 public class DSTupleValue implements TupleValue {
+
+	 
 
 	private com.datastax.driver.core.TupleValue coreTupleValue = null;
 
@@ -735,6 +738,377 @@ public class DSTupleValue implements TupleValue {
 	@Override
 	public <T> T get(int i, TypeToken<T> targetType) {
 		return coreTupleValue.get(i, targetType);
+	}
+
+	@Override
+	public boolean isNull(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getBool(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public byte getByte(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public short getShort(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getInt(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getLong(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public TupleValue setBool(String name, boolean v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Date getTimestamp(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LocalDate getDate(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long getTime(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getFloat(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public TupleValue setByte(String name, byte v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double getDouble(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ByteBuffer getBytesUnsafe(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ByteBuffer getBytes(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getString(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setShort(String name, short v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigInteger getVarint(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigDecimal getDecimal(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UUID getUUID(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public InetAddress getInet(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setInt(String name, int v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> List<T> getList(String name, Class<T> elementsClass)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> List<T> getList(String name, TypeToken<T> elementsType)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> Set<T> getSet(String name, Class<T> elementsClass)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setLong(String name, long v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> Set<T> getSet(String name, TypeToken<T> elementsType)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <K, V> Map<K, V> getMap(String name, Class<K> keysClass,
+			Class<V> valuesClass) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setTimestamp(String name, Date v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <K, V> Map<K, V> getMap(String name, TypeToken<K> keysType,
+			TypeToken<V> valuesType) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setDate(String name, LocalDate v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UDTValue getUDTValue(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue getTupleValue(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getObject(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T get(String name, Class<T> targetClass) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setTime(String name, long v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T get(String name, TypeToken<T> targetType) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setFloat(String name, float v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setDouble(String name, double v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setString(String name, String v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setBytes(String name, ByteBuffer v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setBytesUnsafe(String name, ByteBuffer v)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setVarint(String name, BigInteger v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setDecimal(String name, BigDecimal v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setUUID(String name, UUID v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setInet(String name, InetAddress v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <E> TupleValue setList(String name, List<E> v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <E> TupleValue setList(String name, List<E> v, Class<E> elementsClass)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <E> TupleValue setList(String name, List<E> v,
+			TypeToken<E> elementsType) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <K, V> TupleValue setMap(String name, Map<K, V> v)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <K, V> TupleValue setMap(String name, Map<K, V> v,
+			Class<K> keysClass, Class<V> valuesClass) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <K, V> TupleValue setMap(String name, Map<K, V> v,
+			TypeToken<K> keysType, TypeToken<V> valuesType) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <E> TupleValue setSet(String name, Set<E> v) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <E> TupleValue setSet(String name, Set<E> v, Class<E> elementsClass)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <E> TupleValue setSet(String name, Set<E> v,
+			TypeToken<E> elementsType) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setTupleValue(String name, TupleValue v)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <V> TupleValue set(String name, V v, Class<V> targetClass)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <V> TupleValue set(String name, V v, TypeToken<V> targetType)
+			throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TupleValue setToNull(String name) throws CEUException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

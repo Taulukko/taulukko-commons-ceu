@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.taulukko.ceu.CEUException;
+
 /**
  * Collection of (typed) CQL values that can be retrieved by name.
  */
@@ -61,7 +63,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a boolean.
 	 */
-	public boolean getBool(String name);
+	public boolean getBool(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a byte.
@@ -82,7 +84,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a byte.
 	 */
-	public byte getByte(String name);
+	public byte getByte(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a short.
@@ -103,7 +105,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a short.
 	 */
-	public short getShort(String name);
+	public short getShort(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as an integer.
@@ -124,7 +126,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to an int.
 	 */
-	public int getInt(String name);
+	public int getInt(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a long.
@@ -145,7 +147,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a long.
 	 */
-	public long getLong(String name);
+	public long getLong(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a date.
@@ -164,7 +166,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a {@code Date}.
 	 */
-	public Date getTimestamp(String name);
+	public Date getTimestamp(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a long in nanoseconds since
@@ -184,7 +186,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a long.
 	 */
-	public long getTime(String name);
+	public long getTime(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a float.
@@ -205,7 +207,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a float.
 	 */
-	public float getFloat(String name);
+	public float getFloat(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a double.
@@ -226,7 +228,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a double.
 	 */
-	public double getDouble(String name);
+	public double getDouble(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a ByteBuffer.
@@ -247,7 +249,7 @@ public interface GettableByNameData {
 	 * @throws IllegalArgumentException
 	 *             if {@code name} is not valid name for this object.
 	 */
-	public ByteBuffer getBytesUnsafe(String name);
+	public ByteBuffer getBytesUnsafe(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a byte array.
@@ -266,7 +268,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a {@code ByteBuffer}.
 	 */
-	public ByteBuffer getBytes(String name);
+	public ByteBuffer getBytes(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a string.
@@ -285,7 +287,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a string.
 	 */
-	public String getString(String name);
+	public String getString(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a variable length integer.
@@ -304,7 +306,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a {@code BigInteger}.
 	 */
-	public BigInteger getVarint(String name);
+	public BigInteger getVarint(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a variable length decimal.
@@ -323,7 +325,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a {@code BigDecimal}.
 	 */
-	public BigDecimal getDecimal(String name);
+	public BigDecimal getDecimal(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a UUID.
@@ -342,7 +344,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a {@code UUID}.
 	 */
-	public UUID getUUID(String name);
+	public UUID getUUID(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as an InetAddress.
@@ -361,7 +363,7 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a {@code InetAddress}.
 	 */
-	public InetAddress getInet(String name);
+	public InetAddress getInet(String name) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a list.
@@ -393,7 +395,8 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a list.
 	 */
-	public <T> List<T> getList(String name, Class<T> elementsClass);
+	public <T> List<T> getList(String name, Class<T> elementsClass)
+			throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a set.
@@ -425,7 +428,8 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to a set.
 	 */
-	public <T> Set<T> getSet(String name, Class<T> elementsClass);
+	public <T> Set<T> getSet(String name, Class<T> elementsClass)
+			throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as a map.
@@ -460,7 +464,7 @@ public interface GettableByNameData {
 	 *             type to a map.
 	 */
 	public <K, V> Map<K, V> getMap(String name, Class<K> keysClass,
-			Class<V> valuesClass);
+			Class<V> valuesClass) throws CEUException;
 
 	/**
 	 * Returns the value for {@code name} as the Java type matching its CQL
@@ -487,9 +491,8 @@ public interface GettableByNameData {
 	 *             if {@code name} is not a valid name for this object.
 	 * @see CodecRegistry#codecFor(DataType)
 	 */
-	public <T> T get(String name);
+	public <T> T get(String name) throws CEUException;
 
-	
 	/**
 	 * Returns the value for {@code name} converted to the given Java type.
 	 * <p/>
@@ -518,6 +521,6 @@ public interface GettableByNameData {
 	 *             if there is no registered codec to convert the underlying CQL
 	 *             type to {@code targetClass}.
 	 */
-	<T> T get(String name, Class<T> targetClass);
+	<T> T get(String name, Class<T> targetClass) throws CEUException;
 
 }

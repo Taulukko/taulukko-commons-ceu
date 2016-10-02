@@ -27,6 +27,10 @@ public class MapHandler<K, V> implements Handler<Map<K, V>> {
 
 	@Override
 	public Optional<Map<K, V>> convert(ResultSet result) throws CEUException {
-		return identitys.apply(result);
+		try {
+			return identitys.apply(result);
+		} catch (RuntimeException re) {
+			throw new CEUException(re);
+		}
 	}
 }

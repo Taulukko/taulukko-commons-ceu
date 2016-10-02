@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -16,8 +18,6 @@ import com.taulukko.ceu.data.Row;
 
 public abstract class HandlerUtils {
 
-
-	
 	@SuppressWarnings("unchecked")
 	public static <R> Optional<R> getValueFromObject(Object o, Class<R> clazzR,
 			String fieldName) throws CEUException {
@@ -53,25 +53,23 @@ public abstract class HandlerUtils {
 	}
 
 	public static <R> Optional<R> mapRowToObject(final AtomicInteger fail,
-			Row r, Class<R> clazz, Function<Exception, Boolean> onError) {
+			Row r, Class<R> clazz, Function<Exception, Boolean> onSoftException) {
 
 		try {
-			return fillBean(r, clazz, onError);
+			return fillBean(r, clazz, onSoftException);
 		} catch (Exception e) {
-			if (onError == null) {
+			if (onSoftException == null) {
 				e.printStackTrace();
-			} else if (onError.apply(e)) {
+			} else if (onSoftException.apply(e)) {
 				return null;
 			}
 			return Optional.<R> empty();
 		}
 
 	}
- 
-	  
-	 
+
 	public static <T> Optional<T> fillBean(Row row, Class<T> clazz,
-			Function<Exception, Boolean> onError) throws RuntimeException {
+			Function<Exception, Boolean> onSoftException) throws CEUException {
 
 		ColumnDefinitions columnsDefinition = row.getColumnDefinitions();
 
@@ -80,8 +78,8 @@ public abstract class HandlerUtils {
 		try {
 			ret = clazz.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			if (onError != null) {
-				boolean quit = !onError.apply(e);
+			if (onSoftException != null) {
+				boolean quit = !onSoftException.apply(e);
 				if (!quit) {
 					return Optional.empty();
 				}
@@ -113,14 +111,14 @@ public abstract class HandlerUtils {
 			}
 
 			try {
-				ret = saveValueIntoMethod(row, onError, columnsDefinition, ret,
-						method, parameterName);
+				ret = saveValueIntoMethod(row, onSoftException,
+						columnsDefinition, ret, method, parameterName);
 			} catch (CEUException e) {
-				boolean quit = !onError.apply(e);
+				boolean quit = !onSoftException.apply(e);
 				if (!quit) {
 					return Optional.empty();
 				}
-				throw new RuntimeException("Error ", e);
+				throw e;
 			}
 
 		}
@@ -129,7 +127,7 @@ public abstract class HandlerUtils {
 	}
 
 	private static <T> T saveValueIntoMethod(Row row,
-			Function<Exception, Boolean> onError,
+			Function<Exception, Boolean> onSoftException,
 			ColumnDefinitions columnsDefinition, T ret, Method method,
 			String parameterName) throws CEUException {
 		Object value = null;
@@ -200,7 +198,8 @@ public abstract class HandlerUtils {
 			value = row.get(parameterName, method.getParameterTypes()[0]);
 		}
 
-		setValueIntoBean(ret, value, row, onError, method, parameterName);
+		setValueIntoBean(ret, value, row, onSoftException, method,
+				parameterName);
 		return ret;
 	}
 
@@ -219,15 +218,15 @@ public abstract class HandlerUtils {
 	}
 
 	private static <T> void setValueIntoBean(T object, Object parameter,
-			Row row, Function<Exception, Boolean> onError, Method method,
-			String parameterName) {
+			Row row, Function<Exception, Boolean> onSoftException,
+			Method method, String parameterName) {
 
 		try {
 			method.invoke(object, parameter);
 		} catch (IllegalArgumentException | InvocationTargetException
 				| IllegalAccessException e) {
-			if (onError != null) {
-				boolean quit = !onError.apply(e);
+			if (onSoftException != null) {
+				boolean quit = !onSoftException.apply(e);
 				if (quit) {
 					throw new RuntimeException("Error ", e);
 				}
@@ -286,6 +285,70 @@ public abstract class HandlerUtils {
 
 		} catch (SecurityException e) {
 			throw new CEUException(e.getMessage(), e);
+		}
+	}
+
+	public static <X> X getSilent(final Row row,
+			String fieldName, Class<X> clazz) {
+		try {
+			return row.get(fieldName, clazz);
+		} catch (CEUException e) {
+
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static String getStringSilent(final Row row,
+			String fieldName) {
+		try {
+			return row.getString(fieldName);
+		} catch (CEUException e) {
+
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Integer getIntSilent(final Row row,
+			String fieldName) {
+		try {
+			return row.getInt(fieldName);
+		} catch (CEUException e) {
+
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static <K, V> Map<K, V> getMapSilent(
+			final Row row, Integer index, Class<K> classK, Class<V> classV) {
+
+		try {
+			return row.getMap(index, classK, classV);
+		} catch (CEUException e) {
+
+			throw new RuntimeException(e);
+		}
+	}
+
+	
+	public static <K, V> Map<K, V> getMapSilent(
+			final Row row, String fieldName, Class<K> classK, Class<V> classV) {
+
+		try {
+			return row.getMap(fieldName, classK, classV);
+		} catch (CEUException e) {
+
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static <V> List<V> getListSilent(final Row row,
+			String fieldName, Class<V> classV) {
+
+		try {
+			return row.getList(fieldName, classV);
+		} catch (CEUException e) {
+
+			throw new RuntimeException(e);
 		}
 	}
 

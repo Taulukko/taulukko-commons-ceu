@@ -7,13 +7,7 @@ import java.util.Set;
 import com.taulukko.ceu.CEUException;
 
 public interface Metadata {
-
-	public abstract int hashCode();
-
-	public abstract boolean equals(Object obj);
-
-	public abstract String toString();
-
+ 
 	public abstract Set<Host> getReplicas(String keyspace,
 			ByteBuffer partitionKey)  throws CEUException;
  

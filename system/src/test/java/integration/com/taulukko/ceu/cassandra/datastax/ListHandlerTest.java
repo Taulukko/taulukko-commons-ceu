@@ -33,7 +33,7 @@ public class ListHandlerTest extends BaseTest {
 			setEmails.add(email);
 		});
 
-		Assert.assertEquals(emails.size(), setEmails.size());
+		Assert.assertEquals(emails.size() - 1, setEmails.size());
 
 	}
 
@@ -52,6 +52,5 @@ public class ListHandlerTest extends BaseTest {
 		Assert.assertEquals("Tag2-3", tags.get(1));
 		Assert.assertEquals("Tag3-3", tags.get(2));
 	}
-	
-	 
+
 }

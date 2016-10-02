@@ -1,5 +1,9 @@
 package com.taulukko.ceu.handler;
 
+import static com.taulukko.ceu.handler.HandlerUtils.getSilent;
+import static com.taulukko.ceu.handler.HandlerUtils.getMapSilent;
+import static com.taulukko.ceu.handler.HandlerUtils.getStringSilent;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,17 +19,21 @@ public class MapHandlerBuilder {
 	private MapHandlerBuilder() {
 	}
 
+
 	public static <K, V> FilterMap<K, V> build() {
 		return new FilterMap<K, V>();
 	}
 
 	public static <R, F> Function<Row, String> byKey() {
-		return row -> row.getString("key");
+
+		return row -> getStringSilent(row, "key");
+
 	}
 
 	public static <R, V> Function<Row, V> byField(String fieldName,
 			Class<V> clazz) {
-		return row -> row.get(fieldName, clazz);
+		return row -> getSilent(row, fieldName, clazz);
+
 	}
 
 	public static class FilterMap<K, V> {
@@ -93,11 +101,15 @@ public class MapHandlerBuilder {
 
 		public <K, V> MapHandler<K, V> byFieldMap(String fieldName,
 				Class<K> keysClass, Class<V> valuesClass) {
-			return new MapHandler<K, V>(resultset -> filterbyRow
-					.apply(resultset.stream()).filter(row -> !row.isEmpty())
-					.map(row -> row.getMap(fieldName, keysClass, valuesClass)));
-		}
+			return new MapHandler<K, V>(resultset -> Optional.of(
+					filterbyRow
+							.apply(resultset.stream())
+							.filter(row -> !row.isEmpty())
+							.map(row -> getMapSilent(row,
+									fieldName, keysClass, valuesClass))
 
+			).get());
+		}
 	}
 
 	public static class PreparementCollectorOneRow {
@@ -159,16 +171,19 @@ public class MapHandlerBuilder {
 		public <K, V> MapHandler<K, V> byFunctionAndField(
 				Function<Row, K> keyBuilder, String fieldNameValue,
 				Class<V> classFieldValue) {
-			return byFunction(keyBuilder,
-					row -> row.get(fieldNameValue, classFieldValue));
+			return byFunction(
+					keyBuilder,
+					row -> getSilent(row, fieldNameValue,
+							classFieldValue));
 		}
 
 		public <K, V> MapHandler<K, V> byFieldAndFunction(String fieldNameKey,
 				Class<K> classFieldKey, Function<Row, V> valueBuilder) {
-			return byFunction(row -> row.get(fieldNameKey, classFieldKey),
-					valueBuilder);
-		}
+			return byFunction(
+					row -> getSilent(row, fieldNameKey,
+							classFieldKey), valueBuilder);
 
+		}
 	}
 
 	public static class CollectorFromManyRowsByKey {
@@ -181,14 +196,16 @@ public class MapHandlerBuilder {
 			return new MapHandler<String, V>(resultset -> Optional.of(resultset
 					.stream().collect(
 							Collectors.<Row, String, V> toMap(
-									row -> row.getString("key"),
-									row -> function.apply(row)))));
+									row -> getStringSilent(
+											row, "key"), row -> function
+											.apply(row)))));
 
 		}
 
 		public <K, V> MapHandler<String, V> byField(String fieldName,
 				Class<V> classField) {
-			return byFunction(row -> row.get(fieldName, classField));
+			return byFunction(row -> getSilent(row,
+					fieldName, classField));
 		}
 
 	}

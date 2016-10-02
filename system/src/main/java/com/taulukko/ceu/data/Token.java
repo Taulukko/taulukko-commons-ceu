@@ -1,11 +1,12 @@
 package com.taulukko.ceu.data;
 
+import com.taulukko.ceu.CEUException;
 
 public interface Token {
 
-	public abstract DataType getType();
+	public abstract DataType getType() throws CEUException;
 
-	public abstract Object getValue();
+	public abstract Object getValue() throws CEUException;
 
 	public abstract int hashCode();
 

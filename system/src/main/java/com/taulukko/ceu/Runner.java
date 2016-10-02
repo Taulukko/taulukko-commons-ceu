@@ -30,10 +30,10 @@ public class Runner {
 	public void exec(Command command) throws CEUException {
 
 		String query = command.getQuery();
-		if (command.getParameters().length > 0) {
-			Object parameters[] = command.getParameters();
-			query = fillParameters(query, parameters);
-		}
+
+		Object parameters[] = command.getParameters();
+		query = fillParameters(query, parameters);
+
 		con.execute(query);
 	}
 

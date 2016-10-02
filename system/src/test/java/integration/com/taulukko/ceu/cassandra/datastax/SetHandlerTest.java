@@ -14,10 +14,13 @@ import org.junit.Test;
 import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.Command;
 import com.taulukko.ceu.data.Row;
-import com.taulukko.ceu.handler.SetHandlerBuilder;
+import com.taulukko.ceu.handler.HandlerUtils;
 import com.taulukko.ceu.handler.SetHandler;
+import com.taulukko.ceu.handler.SetHandlerBuilder;
 
 public class SetHandlerTest extends BaseTest {
+	
+	 
 
 	@Test
 	public void byAnyRowCollectbyFieldName() throws CEUException,
@@ -69,8 +72,9 @@ public class SetHandlerTest extends BaseTest {
 				.byAnyRow()
 				.collect()
 				.byFunction(
-						row -> Optional.of(new HashSet<String>(row.get()
-								.getList("tags", String.class))));
+						row -> Optional.of(new HashSet<String>(HandlerUtils
+								.getListSilent(row.get(),
+										"tags", String.class))));
 
 		Command command = new Command("SELECT tags FROM " + TABLE_NAME
 				+ " where key= ? ", "userTest3");
@@ -92,10 +96,15 @@ public class SetHandlerTest extends BaseTest {
 
 		Function<Stream<Row>, Optional<Set<String>>> converter = stream -> Optional
 				.of(new HashSet<String>(
-						stream.filter(
-								row -> row.getString("key").equals("userTest3"))
-								.findFirst().get()
-								.getList("tags", String.class)));
+						HandlerUtils
+								.getListSilent(
+										stream.filter(
+												row -> HandlerUtils
+														.getStringSilent(
+																row, "key")
+														.equals("userTest3"))
+												.findFirst().get(), "tags",
+										String.class)));
 
 		SetHandler<String> handlerSet = SetHandlerBuilder.build().byAllRows()
 				.collect().byFunction(converter);
@@ -118,9 +127,12 @@ public class SetHandlerTest extends BaseTest {
 	@Test
 	public void usingFilter() throws CEUException, ParseException {
 
-		SetHandler<String> handlerSet = SetHandlerBuilder.build()
-				.filter(r -> r.getInt("age") == 45)
-				.filter(r -> "userTestTime".equals(r.getString("key")))
+		SetHandler<String> handlerSet = SetHandlerBuilder
+				.build()
+				.filter(r -> HandlerUtils.getIntSilent(r,
+						"age").equals(Integer.valueOf(45)))
+				.filter(r -> "userTestTime".equals(HandlerUtils
+						.getStringSilent(r, "key")))
 				.byAnyRow().collect().byFieldSet("tags", String.class);
 
 		Command command = new Command("SELECT age,key,tags FROM " + TABLE_NAME
@@ -141,8 +153,9 @@ public class SetHandlerTest extends BaseTest {
 
 		handlerSet = SetHandlerBuilder
 				.build()
-				.filter(r -> r.getString("email").equals("userTesta@gmail.com"))
-				.byAnyRow().collect().byFieldSet("tags", String.class);
+				.filter(r -> HandlerUtils.getStringSilent(r,
+						"email").equals("userTesta@gmail.com")).byAnyRow()
+				.collect().byFieldSet("tags", String.class);
 
 		command = new Command("SELECT key,email,tags FROM " + TABLE_NAME
 				+ " ALLOW FILTERING");

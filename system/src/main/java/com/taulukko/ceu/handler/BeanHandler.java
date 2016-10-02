@@ -11,15 +11,19 @@ import com.taulukko.ceu.data.ResultSet;
 public class BeanHandler<T> implements Handler<T> {
 
 	private Class<T> clazz = null;
-	private Function<Exception, Boolean> onError = null;
+	private Function<Exception, Boolean> onSoftException = null;
 
 	public BeanHandler(Class<T> clazz) {
 		this.clazz = clazz;
 	}
 
-	public BeanHandler(Class<T> clazz, Function<Exception, Boolean> onError) {
+	/**
+	 * @param clazz
+	 * @param onSoftException use to resolve non SQL Exceptions, return true to ignore exception
+	 */
+	public BeanHandler(Class<T> clazz, Function<Exception, Boolean> onSoftException) {
 		this.clazz = clazz;
-		this.onError = onError;
+		this.onSoftException = onSoftException;
 	}
 
 	@Override
@@ -35,7 +39,7 @@ public class BeanHandler<T> implements Handler<T> {
 					.all()
 					.stream()
 					.map(r -> HandlerUtils.mapRowToObject(fail, r, clazz,
-							onError).get()).filter(r -> r != null).findFirst();
+							onSoftException).get()).filter(r -> r != null).findFirst();
 		} catch (NoSuchElementException e) {
 			throw new CEUException(e);
 		}
