@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import com.taulukko.ceu.data.ColumnDefinitions;
 import com.taulukko.ceu.data.DataType;
 import com.taulukko.ceu.data.Definition;
@@ -180,7 +182,7 @@ public class DSColumnDefinitions implements ColumnDefinitions {
 	@Override
 	public void forEach(
 			Consumer<? super com.taulukko.ceu.data.Definition> action) {
-		// TODO Auto-generated method stub
+		throw new NotImplementedException();
 
 	}
 

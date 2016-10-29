@@ -1,3 +1,4 @@
+ 
 package com.taulukko.cassandra;
 
 import java.util.Date;
@@ -70,4 +71,6 @@ public class MainBean {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-}
+} 
+
+ 
