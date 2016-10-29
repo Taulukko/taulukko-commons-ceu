@@ -1,6 +1,7 @@
 package com.taulukko.ceu.handler;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -12,19 +13,20 @@ import com.taulukko.ceu.data.Row;
 public class BeanListHandler<T> implements Handler<List<T>> {
 
 	private Class<T> clazz = null;
-	private Function<Exception, Boolean> onError = null;
+	private Optional<Function<Exception, Boolean>> onError = Optional.empty();
 
-	public BeanListHandler(Class<T> clazz, Function<Exception, Boolean> onerror) {
-		this.clazz = clazz;
-		this.onError = onerror;
+	public BeanListHandler(Class<T> clazz,
+			Optional<Function<Exception, Boolean>> onerror) {
+		this.clazz = Objects.requireNonNull(clazz);
+		this.onError = Objects.requireNonNull(onError);
 	}
 
 	public BeanListHandler(Class<T> clazz) {
-		this(clazz, null);
+		this(clazz, Optional.empty());
 	}
 
 	private static <U> Optional<U> converterFillBean(Row row, Class<U> clazz,
-			Function<Exception, Boolean> onSoftException) {
+			Optional<Function<Exception, Boolean>> onSoftException) {
 		try {
 			return HandlerUtils.fillBean(row, clazz, onSoftException);
 		} catch (CEUException e) {

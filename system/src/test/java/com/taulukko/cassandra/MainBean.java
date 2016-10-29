@@ -1,6 +1,5 @@
 package com.taulukko.cassandra;
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.Map;
 

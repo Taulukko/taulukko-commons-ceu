@@ -7,6 +7,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -52,15 +53,21 @@ public abstract class HandlerUtils {
 		return Optional.empty();
 	}
 
-	public static <R> Optional<R> mapRowToObject(final AtomicInteger fail,
-			Row r, Class<R> clazz, Function<Exception, Boolean> onSoftException) {
+ 
+	
+	public static <R> Optional<R> mapRowToObject(
+			Row r, Class<R> clazz,
+			Optional<Function<Exception, Boolean>> onSoftException) {
+
+		clazz = Objects.requireNonNull(clazz);
+		onSoftException = Objects.requireNonNull(onSoftException);
 
 		try {
 			return fillBean(r, clazz, onSoftException);
 		} catch (Exception e) {
-			if (onSoftException == null) {
+			if (!onSoftException.isPresent()) {
 				e.printStackTrace();
-			} else if (onSoftException.apply(e)) {
+			} else if (onSoftException.get().apply(e)) {
 				return null;
 			}
 			return Optional.<R> empty();
@@ -69,7 +76,12 @@ public abstract class HandlerUtils {
 	}
 
 	public static <T> Optional<T> fillBean(Row row, Class<T> clazz,
-			Function<Exception, Boolean> onSoftException) throws CEUException {
+			Optional<Function<Exception, Boolean>> onSoftException)
+			throws CEUException {
+
+		row = Objects.requireNonNull(row);
+		clazz = Objects.requireNonNull(clazz);
+		onSoftException = Objects.requireNonNull(onSoftException);
 
 		ColumnDefinitions columnsDefinition = row.getColumnDefinitions();
 
@@ -78,9 +90,9 @@ public abstract class HandlerUtils {
 		try {
 			ret = clazz.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			if (onSoftException != null) {
-				boolean quit = !onSoftException.apply(e);
-				if (!quit) {
+			if (onSoftException.isPresent()) {
+				boolean notQuit = onSoftException.get().apply(e);
+				if (notQuit) {
 					return Optional.empty();
 				}
 			}
@@ -114,10 +126,13 @@ public abstract class HandlerUtils {
 				ret = saveValueIntoMethod(row, onSoftException,
 						columnsDefinition, ret, method, parameterName);
 			} catch (CEUException e) {
-				boolean quit = !onSoftException.apply(e);
-				if (!quit) {
-					return Optional.empty();
+				if (onSoftException.isPresent()) {
+					boolean quit = !onSoftException.get().apply(e);
+					if (!quit) {
+						return Optional.empty();
+					}
 				}
+
 				throw e;
 			}
 
@@ -127,79 +142,93 @@ public abstract class HandlerUtils {
 	}
 
 	private static <T> T saveValueIntoMethod(Row row,
-			Function<Exception, Boolean> onSoftException,
+			Optional<Function<Exception, Boolean>> onSoftException,
 			ColumnDefinitions columnsDefinition, T ret, Method method,
 			String parameterName) throws CEUException {
-		Object value = null;
+		row = Objects.requireNonNull(row);
+		onSoftException = Objects.requireNonNull(onSoftException);
+		columnsDefinition = Objects.requireNonNull(columnsDefinition);
+		ret = Objects.requireNonNull(ret);
+		method = Objects.requireNonNull(method);
+		parameterName = Objects.requireNonNull(parameterName);
 
-		if (method.getParameterTypes()[0].getCanonicalName().equals(
-				"java.util.List")) {
-			// converte para uma forma menos especializada (List<String> =>
-			// List<Object>), no futuro melhor e tentar converter para a
-			// forma adequada
-			String type = columnsDefinition.getType(parameterName)
-					.getTypeArguments().get(0).getName().name(); // type
-																	// pode
-																	// ser
-																	// varchar
-																	// por
-			// exemplo
+		try {
+			Object value = null;
 
-			Class<?> clazzGeneric = resolveLangClassFromList(type);
+			if (method.getParameterTypes()[0].getCanonicalName().equals(
+					"java.util.List")) {
+				// converte para uma forma menos especializada (List<String> =>
+				// List<Object>), no futuro melhor e tentar converter para a
+				// forma adequada
+				String type = columnsDefinition.getType(parameterName)
+						.getTypeArguments().get(0).getName().name(); // type
+																		// pode
+																		// ser
+																		// varchar
+																		// por
+				// exemplo
 
-			value = row.getList(parameterName, clazzGeneric);
+				Class<?> clazzGeneric = resolveLangClassFromList(type);
 
-		} else if (method.getParameterTypes()[0].getCanonicalName().equals(
-				"java.util.Map")) {
+				value = row.getList(parameterName, clazzGeneric);
 
-			// converte para uma forma menos especializada (List<String> =>
-			// List<Object>), no futuro melhor e tentar converter para a
-			// forma adequada
-			String typeA = columnsDefinition.getType(parameterName)
-					.getTypeArguments().get(0).getName().name(); // type
-																	// pode
-																	// ser
-																	// varchar
-																	// por
-																	// exemplo
+			} else if (method.getParameterTypes()[0].getCanonicalName().equals(
+					"java.util.Map")) {
 
-			String typeB = columnsDefinition.getType(parameterName)
-					.getTypeArguments().get(1).getName().name(); // type
-																	// pode
-																	// ser
-																	// varchar
-																	// por
-																	// exemplo
+				// converte para uma forma menos especializada (List<String> =>
+				// List<Object>), no futuro melhor e tentar converter para a
+				// forma adequada
+				String typeA = columnsDefinition.getType(parameterName)
+						.getTypeArguments().get(0).getName().name(); // type
+																		// pode
+																		// ser
+																		// varchar
+																		// por
+																		// exemplo
 
-			Class<?> clazzGenericA = resolveLangClassFromList(typeA);
-			Class<?> clazzGenericB = resolveLangClassFromList(typeB);
+				String typeB = columnsDefinition.getType(parameterName)
+						.getTypeArguments().get(1).getName().name(); // type
+																		// pode
+																		// ser
+																		// varchar
+																		// por
+																		// exemplo
 
-			value = row.getMap(parameterName, clazzGenericA, clazzGenericB);
+				Class<?> clazzGenericA = resolveLangClassFromList(typeA);
+				Class<?> clazzGenericB = resolveLangClassFromList(typeB);
 
-		} else if (method.getParameterTypes()[0].getCanonicalName().equals(
-				"java.util.Set")) {
+				value = row.getMap(parameterName, clazzGenericA, clazzGenericB);
 
-			// converte para uma forma menos especializada (List<String> =>
-			// List<Object>), no futuro melhor e tentar converter para a
-			// forma adequada
-			String type = columnsDefinition.getType(parameterName)
-					.getTypeArguments().get(0).getName().name(); // type
-																	// pode
-																	// ser
-																	// varchar
-																	// por
-			// exemplo
+			} else if (method.getParameterTypes()[0].getCanonicalName().equals(
+					"java.util.Set")) {
 
-			Class<?> clazzGeneric = resolveLangClassFromList(type);
+				// converte para uma forma menos especializada (List<String> =>
+				// List<Object>), no futuro melhor e tentar converter para a
+				// forma adequada
+				String type = columnsDefinition.getType(parameterName)
+						.getTypeArguments().get(0).getName().name(); // type
+																		// pode
+																		// ser
+																		// varchar
+																		// por
+				// exemplo
 
-			value = row.getSet(parameterName, clazzGeneric);
+				Class<?> clazzGeneric = resolveLangClassFromList(type);
 
-		} else {
-			value = row.get(parameterName, method.getParameterTypes()[0]);
+				value = row.getSet(parameterName, clazzGeneric);
+
+			} else {
+
+				value = row.get(parameterName, method.getParameterTypes()[0]);
+
+			}
+
+			setValueIntoBean(ret, value, row, onSoftException, method,
+					parameterName);
+		} catch (Throwable e) {
+			throw new CEUException(
+					"Error in reflect in field " + parameterName, e);
 		}
-
-		setValueIntoBean(ret, value, row, onSoftException, method,
-				parameterName);
 		return ret;
 	}
 
@@ -218,15 +247,20 @@ public abstract class HandlerUtils {
 	}
 
 	private static <T> void setValueIntoBean(T object, Object parameter,
-			Row row, Function<Exception, Boolean> onSoftException,
+			Row row, Optional<Function<Exception, Boolean>> onSoftException,
 			Method method, String parameterName) {
+		object = Objects.requireNonNull(object);
+		row = Objects.requireNonNull(row);
+		onSoftException = Objects.requireNonNull(onSoftException);
+		method = Objects.requireNonNull(method);
+		parameterName = Objects.requireNonNull(parameterName);
 
 		try {
 			method.invoke(object, parameter);
 		} catch (IllegalArgumentException | InvocationTargetException
 				| IllegalAccessException e) {
-			if (onSoftException != null) {
-				boolean quit = !onSoftException.apply(e);
+			if (onSoftException.isPresent()) {
+				boolean quit = !onSoftException.get().apply(e);
 				if (quit) {
 					throw new RuntimeException("Error ", e);
 				}
@@ -288,8 +322,8 @@ public abstract class HandlerUtils {
 		}
 	}
 
-	public static <X> X getSilent(final Row row,
-			String fieldName, Class<X> clazz) {
+	public static <X> X getSilent(final Row row, String fieldName,
+			Class<X> clazz) {
 		try {
 			return row.get(fieldName, clazz);
 		} catch (CEUException e) {
@@ -298,8 +332,7 @@ public abstract class HandlerUtils {
 		}
 	}
 
-	public static String getStringSilent(final Row row,
-			String fieldName) {
+	public static String getStringSilent(final Row row, String fieldName) {
 		try {
 			return row.getString(fieldName);
 		} catch (CEUException e) {
@@ -308,8 +341,7 @@ public abstract class HandlerUtils {
 		}
 	}
 
-	public static Integer getIntSilent(final Row row,
-			String fieldName) {
+	public static Integer getIntSilent(final Row row, String fieldName) {
 		try {
 			return row.getInt(fieldName);
 		} catch (CEUException e) {
@@ -318,8 +350,8 @@ public abstract class HandlerUtils {
 		}
 	}
 
-	public static <K, V> Map<K, V> getMapSilent(
-			final Row row, Integer index, Class<K> classK, Class<V> classV) {
+	public static <K, V> Map<K, V> getMapSilent(final Row row, Integer index,
+			Class<K> classK, Class<V> classV) {
 
 		try {
 			return row.getMap(index, classK, classV);
@@ -329,9 +361,8 @@ public abstract class HandlerUtils {
 		}
 	}
 
-	
-	public static <K, V> Map<K, V> getMapSilent(
-			final Row row, String fieldName, Class<K> classK, Class<V> classV) {
+	public static <K, V> Map<K, V> getMapSilent(final Row row,
+			String fieldName, Class<K> classK, Class<V> classV) {
 
 		try {
 			return row.getMap(fieldName, classK, classV);
@@ -341,8 +372,8 @@ public abstract class HandlerUtils {
 		}
 	}
 
-	public static <V> List<V> getListSilent(final Row row,
-			String fieldName, Class<V> classV) {
+	public static <V> List<V> getListSilent(final Row row, String fieldName,
+			Class<V> classV) {
 
 		try {
 			return row.getList(fieldName, classV);

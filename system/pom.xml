@@ -17,19 +17,19 @@
 	<groupId>com.taulukko.commons</groupId>
 	<artifactId>taulukko-commons-ceu</artifactId>
 	<packaging>jar</packaging>
-	<version>2.2.1.0</version>
+	<version>3.0.0-SNAPSHOT</version>
 
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.11</junit.version>
- 
- 
+
+
 
 		<jdk.version>1.8</jdk.version>
 
-		<encoding>UTF-8</encoding> 
- 
+		<encoding>UTF-8</encoding>
+
 	</properties>
 
 	<!-- [ means closet, inclusive. ) means open, excluisive. Eg. [1.0.0,2.0.0) 
@@ -41,39 +41,46 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency> 
- 
- 
+		</dependency>
+
 		<dependency>
-			<groupId>com.taulukko.commons</groupId> 
+			<groupId>com.taulukko.commons</groupId>
 			<artifactId>taulukko-commons-cql</artifactId>
-			<version>1.0.2.16</version>    
-		</dependency> 
- 
+			<version>1.0.2.16</version>
+		</dependency>
+
+
+
 		<dependency>
 			<groupId>com.taulukko.commons</groupId>
 			<artifactId>taulukko-commons-parsers</artifactId>
 			<version>1.0.5</version>
-		</dependency> 
- 
-		  
-		 <!-- Datastax Driver--> 
-		<dependency>
-		  <groupId>com.datastax.cassandra</groupId>
-		  <artifactId>cassandra-driver-core</artifactId>
-		  <version>3.0.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		 
-		 <dependency>
-		  <groupId>com.datastax.cassandra</groupId>
-		  <artifactId>cassandra-driver-mapping</artifactId>
-		  <version>3.0.0</version>
-		</dependency>
-		
+
+
+		<!-- Datastax Driver -->
 		<dependency>
-		  <groupId>com.datastax.cassandra</groupId>
-		  <artifactId>cassandra-driver-extras</artifactId>
-		  <version>3.0.0</version>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-core</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-mapping</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-extras</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
 
@@ -89,9 +96,33 @@
 					<target>${jdk.version}</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				 
+		  
+			</plugin>
 
-
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
