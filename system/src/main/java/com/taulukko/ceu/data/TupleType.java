@@ -8,7 +8,7 @@ public interface TupleType extends OptionalValue{
 	/**
 	 * Returns a new value for this tuple type that uses the provided values for
 	 * the components.
-	 * <p/>
+	 * 
 	 * The numbers of values passed to this method must correspond to the number
 	 * of components in this tuple type. The {@code i}th parameter value will
 	 * then be assigned to the {@code i}th component of the resulting tuple
@@ -35,12 +35,12 @@ public interface TupleType extends OptionalValue{
 	/**
 	 * Return {@code true} if this tuple type contains the given tuple type, and
 	 * {@code false} otherwise.
-	 * <p/>
+	 * 
 	 * A tuple type is said to contain another one if the latter has fewer
 	 * components than the former, but all of them are of the same type. E.g.
 	 * the type {@code tuple<int, text>} is contained by the type
 	 * {@code tuple<int, text, double>}.
-	 * <p/>
+	 * 
 	 * A contained type can be seen as a "partial" view of a containing type,
 	 * where the missing components are supposed to be {@code null}.
 	 *

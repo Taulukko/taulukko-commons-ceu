@@ -21,7 +21,7 @@ import com.taulukko.ceu.data.TupleValue;
 
 /**
  * A tuple type.
- * <p/>
+ *  
  * A tuple type is a essentially a list of types.
  */
 public class DSTupleType extends DSDataType<com.datastax.driver.core.TupleType>

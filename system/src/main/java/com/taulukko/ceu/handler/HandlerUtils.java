@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import com.taulukko.ceu.CEUConfig;
@@ -53,10 +52,7 @@ public abstract class HandlerUtils {
 		return Optional.empty();
 	}
 
- 
-	
-	public static <R> Optional<R> mapRowToObject(
-			Row r, Class<R> clazz,
+	public static <R> Optional<R> mapRowToObject(Row r, Class<R> clazz,
 			Optional<Function<Exception, Boolean>> onSoftException) {
 
 		clazz = Objects.requireNonNull(clazz);
@@ -266,7 +262,8 @@ public abstract class HandlerUtils {
 				}
 
 			} else {
-				e.printStackTrace();
+				new CEUException("Error in set parameter [" + parameterName
+						+ "]", e).printStackTrace();
 			}
 		}
 	}

@@ -46,7 +46,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a boolean.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code boolean} (for CQL type
 	 * {@code boolean}, this will be the built-in codec).
@@ -67,7 +67,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a byte.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code byte} (for CQL type {@code tinyint},
 	 * this will be the built-in codec).
@@ -88,7 +88,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a short.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code short} (for CQL type
 	 * {@code smallint}, this will be the built-in codec).
@@ -109,7 +109,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as an integer.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code int} (for CQL type {@code int}, this
 	 * will be the built-in codec).
@@ -130,7 +130,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a long.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code byte} (for CQL types {@code bigint}
 	 * and {@code counter}, this will be the built-in codec).
@@ -151,7 +151,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a date.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a {@code Date} (for CQL type {@code timestamp},
 	 * this will be the built-in codec).
@@ -171,7 +171,7 @@ public interface GettableByNameData {
 	/**
 	 * Returns the value for {@code name} as a long in nanoseconds since
 	 * midnight.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code long} (for CQL type {@code time},
 	 * this will be the built-in codec).
@@ -190,7 +190,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a float.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code float} (for CQL type {@code float},
 	 * this will be the built-in codec).
@@ -211,7 +211,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a double.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code double} (for CQL type {@code double}
 	 * , this will be the built-in codec).
@@ -232,11 +232,11 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a ByteBuffer.
-	 * <p/>
+	 *  
 	 * This method does not use any codec; it returns a copy of the binary
 	 * representation of the value. It is up to the caller to convert the
 	 * returned value appropriately.
-	 * <p/>
+	 *  
 	 * Note: this method always return the bytes composing the value, even if
 	 * the column is not of type BLOB. That is, this method never throw an
 	 * InvalidTypeException. However, if the type is not BLOB, it is up to the
@@ -253,7 +253,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a byte array.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java {@code ByteBuffer} (for CQL type
 	 * {@code blob}, this will be the built-in codec).
@@ -272,7 +272,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a string.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a Java string (for CQL types {@code text},
 	 * {@code varchar} and {@code ascii}, this will be the built-in codec).
@@ -291,7 +291,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a variable length integer.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a {@code BigInteger} (for CQL type {@code varint},
 	 * this will be the built-in codec).
@@ -310,7 +310,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a variable length decimal.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a {@code BigDecimal} (for CQL type {@code decimal}
 	 * , this will be the built-in codec).
@@ -329,7 +329,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a UUID.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a {@code UUID} (for CQL types {@code uuid} and
 	 * {@code timeuuid}, this will be the built-in codec).
@@ -348,7 +348,7 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as an InetAddress.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to an {@code InetAddress} (for CQL type {@code inet},
 	 * this will be the built-in codec).
@@ -367,13 +367,13 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a list.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a list of the specified type.
-	 * <p/>
+	 *  
 	 * If the type of the elements is generic, use
 	 * {@link #getList(String, TypeToken)}.
-	 * <p/>
+	 *  
 	 * Implementation note: the actual {@link List} implementation will depend
 	 * on the {@link TypeCodec codec} being used; therefore, callers should make
 	 * no assumptions concerning its mutability nor its thread-safety.
@@ -400,13 +400,13 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a set.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a set of the specified type.
-	 * <p/>
+	 *  
 	 * If the type of the elements is generic, use
 	 * {@link #getSet(String, TypeToken)}.
-	 * <p/>
+	 *  
 	 * Implementation note: the actual {@link Set} implementation will depend on
 	 * the {@link TypeCodec codec} being used; therefore, callers should make no
 	 * assumptions concerning its mutability nor its thread-safety. Furthermore,
@@ -433,13 +433,13 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} as a map.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to a map of the specified types.
-	 * <p/>
+	 *  
 	 * If the type of the keys and/or values is generic, use
 	 * {@link #getMap(String, TypeToken, TypeToken)}.
-	 * <p/>
+	 *  
 	 * Implementation note: the actual {@link Map} implementation will depend on
 	 * the {@link TypeCodec codec} being used; therefore, callers should make no
 	 * assumptions concerning its mutability nor its thread-safety. Furthermore,
@@ -469,11 +469,11 @@ public interface GettableByNameData {
 	/**
 	 * Returns the value for {@code name} as the Java type matching its CQL
 	 * type.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find the first codec that
 	 * handles the underlying CQL type. The Java type of the returned object
 	 * will be determined by the codec that was selected.
-	 * <p/>
+	 *  
 	 * Use this method to dynamically inspect elements when types aren't known
 	 * in advance, for instance if you're writing a generic row logger. If you
 	 * know the target Java type, it is generally preferable to use typed
@@ -495,12 +495,12 @@ public interface GettableByNameData {
 
 	/**
 	 * Returns the value for {@code name} converted to the given Java type.
-	 * <p/>
+	 *  
 	 * This method uses the {@link CodecRegistry} to find a codec to convert the
 	 * underlying CQL type to the given Java type.
-	 * <p/>
+	 *  
 	 * If the target type is generic, use {@link #get(String, TypeToken)}.
-	 * <p/>
+	 *  
 	 * Implementation note: the actual object returned by this method will
 	 * depend on the {@link TypeCodec codec} being used; therefore, callers
 	 * should make no assumptions concerning its mutability nor its
