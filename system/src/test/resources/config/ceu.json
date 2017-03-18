@@ -1,0 +1,30 @@
+{
+  "fileObjective": "CEU config file example",
+  "isAutoWrapItemName": true,
+  "driver": "",
+  "servers": [
+    {
+      "clusterName": "Test Cluster",
+      "keyspace": "KeySpaceTest",
+      "hostName": "localhost",
+      "port": 9160,
+      "primary": false,
+      "maxConsPerHost": 30,
+      "maxTimeoutWhenExhausted": 120000,
+      "maxSchemaAgreementWaitSeconds": 30000,
+      "socketTimeout": 60000,
+      "connectTimeout": 10000
+    },
+    {
+      "clusterName": "Taulukko Cluster 01",
+      "keyspace": "example",
+      "hostName": "localhost",
+      "port": 9160,
+      "primary": false,
+      "maxConsPerHost": 30,
+      "maxTimeoutWhenExhausted": 120000,
+      "socketTimeout": 60000,
+      "connectTimeout": 10000
+    }
+  ]
+}
