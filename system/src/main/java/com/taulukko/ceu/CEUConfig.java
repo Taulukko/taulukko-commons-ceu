@@ -56,8 +56,9 @@ public class CEUConfig extends Thread {
 
 		try {
 			load(new FileInputStream(path));
+			
 		} catch (FileNotFoundException fe) {
-			throw new CEUException("Template properties file not founded in ("
+			throw new CEUException("ceu.json not founded in ("
 					+ path + ")", fe);
 		}
 
@@ -102,10 +103,12 @@ public class CEUConfig extends Thread {
 
 		if (CEUConfig.verbose) {
 			System.out.println("\n\n" + LINE_SEPARATOR + "\n[" + new Date()
-					+ "] : CEU properties loaded!");
-			System.out.print("\nproperties = " + json);
+					+ "] : CEU config loaded!");
+			System.out.print("\n config = " + json);
 			System.out.print("\n" + LINE_SEPARATOR + "\n\n");
 		}
+		
+		CEUConfig.loaded=true;
 	}
 
 	public static ConfigBean getConfig() {

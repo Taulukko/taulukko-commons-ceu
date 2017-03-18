@@ -3,9 +3,12 @@ package com.taulukko.cassandra;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.taulukko.ceu.CEUConfig;
+import com.taulukko.ceu.CEUException;
 import com.taulukko.ceu.ConfigBean;
 import com.taulukko.ceu.data.ServerInfo;
 import com.taulukko.commons.parsers.jsonParser.JSONParser;
+import com.taulukko.commons.util.io.EFile;
 
 public class ConfigTest {
 
@@ -22,5 +25,13 @@ public class ConfigTest {
 		Assert.assertNotNull(serverInfo);
 		Assert.assertEquals("Taulukko Cluster 01", serverInfo.getClusterName());
 		Assert.assertEquals(true, serverInfo.isPrimary());
+	}
+	
+	@Test
+	public void loadedProperty() throws CEUException {
+
+		 assert !CEUConfig.loaded;
+		 CEUConfig.load(EFile.getWorkPath()+"/src/test/resources/config/ceu.json");
+		 assert CEUConfig.loaded;
 	}
 }
