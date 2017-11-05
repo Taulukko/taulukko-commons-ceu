@@ -17,15 +17,13 @@
 	<groupId>com.taulukko.commons</groupId>
 	<artifactId>taulukko-commons-ceu</artifactId>
 	<packaging>jar</packaging>
-	<version>3.1.7</version>
+	<version>3.1.9</version>
 
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.11</junit.version>
-
-
-
+ 
 		<jdk.version>1.8</jdk.version>
 
 		<encoding>UTF-8</encoding>
@@ -42,11 +40,18 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.taulukko.commons</groupId>
+			<artifactId>taulukko-commons-util</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		
 
 		<dependency>
 			<groupId>com.taulukko.commons</groupId>
 			<artifactId>taulukko-commons-cql</artifactId>
-			<version>2.1.2</version>
+			<version>2.1.4</version>
 		</dependency>
 
 		<dependency>
@@ -83,6 +88,8 @@
 		    <version>2.4.7</version>
 		</dependency>
 	</dependencies>
+
+	
 
 	<build>
 		<plugins>

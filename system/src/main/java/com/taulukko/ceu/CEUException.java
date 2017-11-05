@@ -1,6 +1,8 @@
 package com.taulukko.ceu;
 
-public class CEUException extends Exception {
+import com.taulukko.commons.TaulukkoException;
+
+public class CEUException extends TaulukkoException {
 
 	/**
 	 * 
