@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 
 import com.google.common.reflect.TypeToken;
 import com.taulukko.ceu.CEUException;
@@ -640,16 +640,16 @@ public class DSRow implements Row {
 
 	@Override
 	public LocalDate getDate(int i) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue getTupleValue(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue getTupleValue(int i) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 }

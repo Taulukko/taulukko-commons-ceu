@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 
 import com.google.common.reflect.TypeToken;
 import com.taulukko.ceu.CEUException;
@@ -744,314 +744,314 @@ public class DSTupleValue implements TupleValue {
 
 	@Override
 	public boolean isNull(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("isNull");
 	}
 
 	@Override
 	public boolean getBool(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public byte getByte(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public short getShort(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public int getInt(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public long getLong(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setBool(String name, boolean v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public Date getTimestamp(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public LocalDate getDate(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public long getTime(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public float getFloat(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setByte(String name, byte v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public double getDouble(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public ByteBuffer getBytesUnsafe(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public ByteBuffer getBytes(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public String getString(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setShort(String name, short v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public BigInteger getVarint(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public BigDecimal getDecimal(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public UUID getUUID(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public InetAddress getInet(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setInt(String name, int v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <T> List<T> getList(String name, Class<T> elementsClass)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <T> List<T> getList(String name, TypeToken<T> elementsType)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <T> Set<T> getSet(String name, Class<T> elementsClass)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setLong(String name, long v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <T> Set<T> getSet(String name, TypeToken<T> elementsType)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <K, V> Map<K, V> getMap(String name, Class<K> keysClass,
 			Class<V> valuesClass) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setTimestamp(String name, Date v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <K, V> Map<K, V> getMap(String name, TypeToken<K> keysType,
 			TypeToken<V> valuesType) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setDate(String name, LocalDate v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public UDTValue getUDTValue(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue getTupleValue(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public Object getObject(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <T> T get(String name, Class<T> targetClass) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setTime(String name, long v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <T> T get(String name, TypeToken<T> targetType) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setFloat(String name, float v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setDouble(String name, double v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setString(String name, String v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setBytes(String name, ByteBuffer v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setBytesUnsafe(String name, ByteBuffer v)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setVarint(String name, BigInteger v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setDecimal(String name, BigDecimal v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setUUID(String name, UUID v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setInet(String name, InetAddress v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <E> TupleValue setList(String name, List<E> v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <E> TupleValue setList(String name, List<E> v, Class<E> elementsClass)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <E> TupleValue setList(String name, List<E> v,
 			TypeToken<E> elementsType) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <K, V> TupleValue setMap(String name, Map<K, V> v)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <K, V> TupleValue setMap(String name, Map<K, V> v,
 			Class<K> keysClass, Class<V> valuesClass) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <K, V> TupleValue setMap(String name, Map<K, V> v,
 			TypeToken<K> keysType, TypeToken<V> valuesType) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <E> TupleValue setSet(String name, Set<E> v) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <E> TupleValue setSet(String name, Set<E> v, Class<E> elementsClass)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <E> TupleValue setSet(String name, Set<E> v,
 			TypeToken<E> elementsType) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setTupleValue(String name, TupleValue v)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <V> TupleValue set(String name, V v, Class<V> targetClass)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public <V> TupleValue set(String name, V v, TypeToken<V> targetType)
 			throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 	@Override
 	public TupleValue setToNull(String name) throws CEUException {
-		throw new NotImplementedException();
+		throw new NotImplementedException("CEU");
 	}
 
 }
