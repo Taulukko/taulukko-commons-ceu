@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 import com.taulukko.ceu.CEUConfig;
@@ -368,7 +369,17 @@ public abstract class HandlerUtils {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static <V> Set<V> getSetSilent(final Row row, String fieldName,
+			Class<V> classV) {
 
+		try {
+			return row.getSet(fieldName, classV);
+		} catch (CEUException e) {
+
+			throw new RuntimeException(e);
+		}
+	} 
 	public static <V> List<V> getListSilent(final Row row, String fieldName,
 			Class<V> classV) {
 

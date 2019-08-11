@@ -152,7 +152,7 @@ public class SetHandlerBuilder {
 				}
 
 				return Optional.of(HandlerUtils
-						.getListSilent(row.get(), fieldName,
+						.getSetSilent(row.get(), fieldName,
 								clazz).stream().distinct()
 						.collect(Collectors.toSet()));
 
